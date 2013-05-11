@@ -1,4 +1,4 @@
-package herring.agent;
+package org.herring.agent;
 
 /**
  * Interface for Processor.

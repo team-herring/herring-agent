@@ -1,8 +1,7 @@
-package herring.agent;
+package org.herring.agent;
 
 
-import herring.agent.parser.JavaStackTraceParser;
-import org.apache.commons.io.monitor.FileAlterationListener;
+import org.herring.agent.parser.JavaStackTraceParser;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 

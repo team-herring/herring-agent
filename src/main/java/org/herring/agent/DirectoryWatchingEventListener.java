@@ -1,4 +1,4 @@
-package herring.agent;
+package org.herring.agent;
 
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
@@ -10,7 +10,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-import static herring.agent.AgentUtils.isReadableFile;
+import static org.herring.agent.AgentUtils.isReadableFile;
 
 /**
  * Event Listener for DirectoryWatcher
