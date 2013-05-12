@@ -1,9 +1,9 @@
 package org.herring.agent;
 
 
-import org.herring.agent.parser.JavaStackTraceParser;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.herring.agent.parser.IISLogParser;
 
 import java.io.File;
 
@@ -16,7 +16,7 @@ import java.io.File;
  * Date: 13. 4. 23.
  * Time: 오후 9:39
  */
-public class DirectoryWatcher  implements Watcher  {
+public class DirectoryWatcher implements Watcher {
     File targetDirectory;
     FileAlterationObserver observer;
     FileAlterationMonitor monitor;
@@ -26,8 +26,8 @@ public class DirectoryWatcher  implements Watcher  {
         targetDirectory = new File(directory);
 
         listener = new DirectoryWatchingEventListener();
-        listener.addParser(new JavaStackTraceParser());
-
+//        listener.addParser(new JavaStackTraceParser());
+        listener.addParser(new IISLogParser());
         observer = new FileAlterationObserver(targetDirectory);
         observer.addListener(listener);
 
@@ -36,7 +36,7 @@ public class DirectoryWatcher  implements Watcher  {
         monitor.addObserver(observer);
     }
 
-    public void startWatching(){
+    public void startWatching() {
         try {
             monitor.start();
         } catch (Exception e) {
