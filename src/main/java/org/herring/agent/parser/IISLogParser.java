@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class IISLogParser extends AbstractParser{
 
     public IISLogParser(){
-        regex = "(\\d{4}-\\d\\d-\\d\\d) (\\d\\d:\\d\\d:\\d\\d) ([a-zA-Z0-9_-]+) (\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}) (GET|POST|PUT|DELETE|HEAD|TRACE|OPTION|CONNECT) (.*?) (.*?) (\\d{1,5}) (.*?) (\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}) (.*?) (\\d{3}) (\\d{1,3}) (\\d{1,3})";
+        regex = "({date}\\d{4}-\\d\\d-\\d\\d) ({time}\\d\\d:\\d\\d:\\d\\d) ({s-sitename}[a-zA-Z0-9_-]+) ({s-ip}\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}) ({cs-method}GET|POST|PUT|DELETE|HEAD|TRACE|OPTION|CONNECT) ({cs-uri-stem}.*?) ({cs-uri-query}.*?) ({s-port}\\d{1,5}) ({cs-username}.*?) ({c-ip}\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}) ({cs}.*?) ({sc-status}\\d{3}) ({sc-substatus}\\d{1,3}) ({sc-win32-status}\\d{1,3})";
 
     }
     @Override
