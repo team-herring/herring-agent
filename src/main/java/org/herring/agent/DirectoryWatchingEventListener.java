@@ -59,7 +59,7 @@ public class DirectoryWatchingEventListener implements FileAlterationListener {
             String readLine = ReadContentsFromFile(file, 0);
 
             //Create a counted line number file
-            CreateCountLineFile(file,Integer.parseInt(readLine));
+            CreateCountLineFile(file, readLine.length());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

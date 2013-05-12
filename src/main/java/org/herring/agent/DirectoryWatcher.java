@@ -22,7 +22,6 @@ public class DirectoryWatcher  implements Watcher  {
     FileAlterationMonitor monitor;
     DirectoryWatchingEventListener listener;
 
-
     public DirectoryWatcher(String directory) {
         targetDirectory = new File(directory);
 

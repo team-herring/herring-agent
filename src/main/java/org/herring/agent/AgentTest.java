@@ -1,7 +1,5 @@
 package org.herring.agent;
 
-import java.util.ArrayList;
-
 /**
  * Test class for agent polling a directory.
  * User: hyunje
@@ -17,15 +15,6 @@ public class AgentTest {
             directoryWatcher.startWatching();
         } catch (Exception e) {
             System.out.println("Exception occurred!");
-        }
-
-
-        ArrayList<String> strArray = new ArrayList<String>();
-        strArray.add("a");
-        strArray.add("b");
-
-        for (String aStr : strArray) {
-            System.out.println(aStr);
         }
     }
 }

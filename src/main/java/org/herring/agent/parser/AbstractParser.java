@@ -13,5 +13,6 @@ public abstract class AbstractParser implements Processor {
     protected String lines;
     protected String regex;
 
+
     public abstract void parse(String input);
 }
