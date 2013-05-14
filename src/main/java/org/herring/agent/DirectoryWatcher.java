@@ -3,6 +3,7 @@ package org.herring.agent;
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.herring.agent.parser.ApacheWebAccessLogParser;
 import org.herring.agent.parser.IISLogParser;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class DirectoryWatcher implements Watcher {
         listener = new DirectoryWatchingEventListener();
 //        listener.addParser(new JavaStackTraceParser());
         listener.addParser(new IISLogParser());
+        listener.addParser(new ApacheWebAccessLogParser());
         observer = new FileAlterationObserver(targetDirectory);
         observer.addListener(listener);
 

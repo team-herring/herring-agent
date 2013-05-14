@@ -58,6 +58,9 @@ public class DirectoryWatchingEventListener implements FileAlterationListener {
             //Read from added File
             String readLine = ReadContentsFromFile(file, 0);
 
+            //Parse read line
+            parser.parse(readLine);
+
             //Create a counted line number file
             CreateCountLineFile(file, readLine.length());
 
@@ -93,8 +96,6 @@ public class DirectoryWatchingEventListener implements FileAlterationListener {
 
             //Regular Expression Match
             parser.parse(addedLine);
-
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

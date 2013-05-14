@@ -21,7 +21,7 @@ public class IISLogParser extends AbstractParser{
         regex = "({"+COLUMN_NAME.date+"}\\d{4}-\\d\\d-\\d\\d)\\s" +
                 "({"+COLUMN_NAME.time+"}\\d\\d:\\d\\d:\\d\\d)\\s" +
                 "({"+COLUMN_NAME.s_sitename+"}[a-zA-Z0-9_-]+)\\s" +
-                "({"+COLUMN_NAME.s_ip+"}\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3})\\s" +
+                "({"+COLUMN_NAME.s_ip+"}\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})\\s" +
                 "({"+COLUMN_NAME.cs_method+"}GET|POST|PUT|DELETE|HEAD|TRACE|OPTION|CONNECT)\\s" +
                 "({"+COLUMN_NAME.cs_uri_stem+"}.*?)\\s" +
                 "({"+COLUMN_NAME.cs_uri_query+"}.*?)\\s" +
@@ -32,7 +32,6 @@ public class IISLogParser extends AbstractParser{
                 "({"+COLUMN_NAME.sc_status+"}\\d{3})\\s" +
                 "({"+COLUMN_NAME.sc_substatus+"}\\d{1,3})\\s" +
                 "({"+COLUMN_NAME.sc_win32_status+"}\\d{1,3})";
-
     }
     @Override
     public void parse(String input) {
@@ -47,6 +46,7 @@ public class IISLogParser extends AbstractParser{
         Matcher matcher = pattern.matcher(trimmed_input);
         MatchIterator matchIterator = matcher.findAll();
         while (matchIterator.hasMore()){
+            System.out.println("-------------------------------------");
             MatchResult matchResult = matchIterator.nextMatch();
             int gc = matchResult.groupCount();
             System.out.println("Group Count :"+gc);

@@ -10,7 +10,6 @@ import org.herring.agent.Processor;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractParser implements Processor {
-    protected String lines;
     protected String regex;
 
 
