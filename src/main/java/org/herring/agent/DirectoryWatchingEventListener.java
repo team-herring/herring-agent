@@ -88,7 +88,7 @@ public class DirectoryWatchingEventListener implements FileAlterationListener {
 
             // Read from counted char
             String addedLine = ReadContentsFromFile(file, preReadLine);
-            System.out.print("Added Line : ");System.out.println(addedLine);
+//            System.out.print("Added Line : ");System.out.println(addedLine);
 
             //update counted char
             int postReadLine = preReadLine + addedLine.length();

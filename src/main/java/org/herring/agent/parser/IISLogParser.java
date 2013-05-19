@@ -45,15 +45,20 @@ public class IISLogParser extends AbstractParser{
         Pattern pattern = new Pattern(regex);
         Matcher matcher = pattern.matcher(trimmed_input);
         MatchIterator matchIterator = matcher.findAll();
+        System.out.println("-------------------------------------");
+        System.out.println("Matched Size : "+matchIterator.count());
+/*
         while (matchIterator.hasMore()){
-            System.out.println("-------------------------------------");
             MatchResult matchResult = matchIterator.nextMatch();
             int gc = matchResult.groupCount();
-            System.out.println("Group Count :"+gc);
+            System.out.println("Match Regex!!");
+
             for(COLUMN_NAME column_name : COLUMN_NAME.values()){
                 System.out.println("Group '"+column_name+"' : "+matchResult.group(column_name.toString()));
             }
         }
+*/
+        System.out.println("-------------------------------------");
     }
 }
 

@@ -29,7 +29,7 @@ public class DirectoryWatcher implements Watcher {
         listener = new DirectoryWatchingEventListener();
 //        listener.addParser(new JavaStackTraceParser());
         listener.addParser(new IISLogParser());
-        listener.addParser(new ApacheWebAccessLogParser());
+//        listener.addParser(new ApacheWebAccessLogParser());
         observer = new FileAlterationObserver(targetDirectory);
         observer.addListener(listener);
 

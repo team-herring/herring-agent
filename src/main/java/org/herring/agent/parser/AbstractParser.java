@@ -3,15 +3,14 @@ package org.herring.agent.parser;
 import org.herring.agent.Processor;
 
 /**
- * Created with IntelliJ IDEA.
+ * Parser 추상화 객체
  * User: hyunje
  * Date: 13. 5. 8.
  * Time: 오후 10:56
- * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractParser implements Processor {
     protected String regex;
-
+    protected enum COMUMN_NAME{};
 
     public abstract void parse(String input);
 }
