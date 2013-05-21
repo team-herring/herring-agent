@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<agent>
+    <configuration>
+        <watcher>
+            <type>polling</type>
+            <delay>200</delay>
+            <target>/Users/hyunje/IdeaProjects/Herring Agent/watching</target>
+        </watcher>
+        <parser>
+            <type>IIS</type>
+        </parser>
+        <target>
+            <ip>61.43.139.117</ip>
+            <port>8989</port>
+        </target>
+    </configuration>
+</agent>

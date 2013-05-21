@@ -3,7 +3,6 @@ package org.herring.agent.watcher;
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
-import org.herring.agent.DirectoryWatchingEventListener;
 import org.herring.agent.processor.parser.IISLogParser;
 
 import java.io.File;

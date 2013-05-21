@@ -11,12 +11,12 @@ import java.io.File;
 public class AgentUtils {
 
     public static boolean isReadableFile(File file){
-        return !(file.getName().endsWith("." + Constnts.readCountSuffix) ||
+        return !(file.getName().endsWith("." + Constants.readCountSuffix) ||
                 file.getName().startsWith("."));
 
     }
-    public static class Constnts{
-        static String readCountSuffix = "count";
-        static int BufferSize = 256;
+    public static class Constants {
+        public static String readCountSuffix = "count";
+        public static int BufferSize = 256;
     }
 }

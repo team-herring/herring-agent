@@ -1,7 +1,8 @@
-package org.herring.agent;
+package org.herring.agent.watcher;
 
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.herring.agent.AgentUtils;
 import org.herring.agent.processor.Processor;
 
 import java.io.File;
@@ -77,7 +78,7 @@ public class DirectoryWatchingEventListener implements FileAlterationListener {
         if (!isReadableFile(file)) return;
         System.out.println("File was changed : " + file.getName());
         try {
-            File countFile = new File(file.getAbsolutePath() + "." + AgentUtils.Constnts.readCountSuffix);
+            File countFile = new File(file.getAbsolutePath() + "." + AgentUtils.Constants.readCountSuffix);
             if (!countFile.exists()) {
                 System.out.println("Count file does not exist.");
                 return;
@@ -109,7 +110,7 @@ public class DirectoryWatchingEventListener implements FileAlterationListener {
     private String ReadContentsFromFile(File file, int position) throws IOException {
         RandomAccessFile addedFile = new RandomAccessFile(file.getAbsolutePath(), "r");
         FileChannel addedFileChannel = addedFile.getChannel();
-        ByteBuffer addedFileBuffer = ByteBuffer.allocate(AgentUtils.Constnts.BufferSize);
+        ByteBuffer addedFileBuffer = ByteBuffer.allocate(AgentUtils.Constants.BufferSize);
         addedFileBuffer.clear();
         addedFileChannel.position(position);
         int byteRead = addedFileChannel.read(addedFileBuffer);
@@ -136,10 +137,10 @@ public class DirectoryWatchingEventListener implements FileAlterationListener {
     }
 
     private void CreateCountLineFile(File file, int countLine) throws IOException{
-        RandomAccessFile countFile = new RandomAccessFile(file.getAbsolutePath()+"."+AgentUtils.Constnts.readCountSuffix,"rw");
+        RandomAccessFile countFile = new RandomAccessFile(file.getAbsolutePath()+"."+ AgentUtils.Constants.readCountSuffix,"rw");
         countFile.setLength(0);
         FileChannel countFileChannel = countFile.getChannel();
-        ByteBuffer buffer = ByteBuffer.allocate(AgentUtils.Constnts.BufferSize);
+        ByteBuffer buffer = ByteBuffer.allocate(AgentUtils.Constants.BufferSize);
 
         System.out.println("New Count : " + countLine);
 
