@@ -49,7 +49,7 @@ public class PollingWatcher implements Watcher {
     public void setProcessor(Processor processor) {
 //        listener.addProcessor(new JavaStackTraceParser());
 //        listener.addProcessor(new ApacheWebAccessLogParser());
-        listener.addProcessor(new IISLogParser());
+        listener.addProcessor(processor);
     }
 
 

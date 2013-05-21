@@ -6,9 +6,9 @@
             <delay>200</delay>
             <target>/Users/hyunje/IdeaProjects/Herring Agent/watching</target>
         </watcher>
-        <parser>
-            <type>IIS</type>
-        </parser>
+        <processor>
+            <type>iislogparser</type>
+        </processor>
         <target>
             <ip>61.43.139.117</ip>
             <port>8989</port>

@@ -19,4 +19,11 @@ public class AgentUtils {
         public static String readCountSuffix = "count";
         public static int BufferSize = 256;
     }
+
+    public static enum ProcessorType{
+        IISLogParser,
+        ApacheWebAccessLogParser,
+        JavaStackTraceParser,
+        NullParser
+    }
 }
