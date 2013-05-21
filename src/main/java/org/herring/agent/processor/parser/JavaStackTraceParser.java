@@ -1,4 +1,4 @@
-package org.herring.agent.parser;
+package org.herring.agent.processor.parser;
 
 
 import java.util.regex.Matcher;

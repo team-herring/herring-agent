@@ -1,4 +1,4 @@
-package org.herring.agent;
+package org.herring.agent.watcher;
 
 /**
  * Interface for watching something.

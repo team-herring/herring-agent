@@ -1,4 +1,4 @@
-package org.herring.agent;
+import org.herring.agent.watcher.PollingWatcher;
 
 /**
  * Test class for agent polling a directory.
@@ -9,10 +9,10 @@ package org.herring.agent;
  */
 public class AgentTest {
     public static void main(String[] args) {
-        DirectoryWatcher directoryWatcher = new DirectoryWatcher("/Users/hyunje/IdeaProjects/Herring Agent/watching");
+        PollingWatcher pollingWatcher = new PollingWatcher("/Users/hyunje/IdeaProjects/Herring Agent/watching");
         System.out.println("Start Polling");
         try {
-            directoryWatcher.startWatching();
+            pollingWatcher.startWatching();
         } catch (Exception e) {
             System.out.println("Exception occurred!");
         }

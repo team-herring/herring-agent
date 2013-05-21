@@ -2,6 +2,7 @@ package org.herring.agent;
 
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.herring.agent.processor.Processor;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +14,7 @@ import java.nio.channels.FileChannel;
 import static org.herring.agent.AgentUtils.isReadableFile;
 
 /**
- * Event Listener for DirectoryWatcher
+ * Event Listener for PollingWatcher
  * User: hyunje
  * Date: 13. 5. 5.
  * Time: 오후 10:08

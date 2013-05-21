@@ -1,6 +1,6 @@
-package org.herring.agent.parser;
+package org.herring.agent.processor.parser;
 
-import org.herring.agent.Processor;
+import org.herring.agent.processor.Processor;
 
 /**
  * Parser 추상화 객체
