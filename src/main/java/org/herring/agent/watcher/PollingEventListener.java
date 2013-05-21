@@ -21,11 +21,11 @@ import static org.herring.agent.AgentUtils.isReadableFile;
  * Time: 오후 10:08
  * To change this template use File | Settings | File Templates.
  */
-public class DirectoryWatchingEventListener implements FileAlterationListener {
+public class PollingEventListener implements FileAlterationListener {
     Processor parser;
 
-    public void addParser(Processor parser){
-        this.parser = parser;
+    public void addProcessor(Processor processor){
+        this.parser = processor;
     }
 
     @Override

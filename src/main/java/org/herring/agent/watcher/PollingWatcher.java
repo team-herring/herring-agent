@@ -3,6 +3,7 @@ package org.herring.agent.watcher;
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.herring.agent.processor.Processor;
 import org.herring.agent.processor.parser.IISLogParser;
 
 import java.io.File;
@@ -20,20 +21,19 @@ public class PollingWatcher implements Watcher {
     File targetDirectory;
     FileAlterationObserver observer;
     FileAlterationMonitor monitor;
-    DirectoryWatchingEventListener listener;
+    PollingEventListener listener;
 
-    public PollingWatcher(String directory) {
-        targetDirectory = new File(directory);
+    public PollingWatcher(String target, int delay) {
+        targetDirectory = new File(target);
 
-        listener = new DirectoryWatchingEventListener();
-//        listener.addParser(new JavaStackTraceParser());
-//        listener.addParser(new ApacheWebAccessLogParser());
-        listener.addParser(new IISLogParser());
+        listener = new PollingEventListener();
+
         observer = new FileAlterationObserver(targetDirectory);
         observer.addListener(listener);
 
 
-        monitor = new FileAlterationMonitor();
+        monitor = new FileAlterationMonitor(delay);
+//        monitor = new FileAlterationMonitor(500);
         monitor.addObserver(observer);
     }
 
@@ -43,6 +43,13 @@ public class PollingWatcher implements Watcher {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void setProcessor(Processor processor) {
+//        listener.addProcessor(new JavaStackTraceParser());
+//        listener.addProcessor(new ApacheWebAccessLogParser());
+        listener.addProcessor(new IISLogParser());
     }
 
 
