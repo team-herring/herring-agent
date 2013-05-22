@@ -10,7 +10,8 @@ import org.herring.agent.processor.Processor;
  */
 public abstract class AbstractParser implements Processor {
     protected String regex;
-    protected enum COMUMN_NAME{};
 
     public abstract void parse(String input);
+    public abstract String getParserType();
+
 }

@@ -59,5 +59,10 @@ public class IISLogParser extends AbstractParser{
 */
         System.out.println("-------------------------------------");
     }
+
+    @Override
+    public String getParserType() {
+        return "IIS Web Log Parser";
+    }
 }
 

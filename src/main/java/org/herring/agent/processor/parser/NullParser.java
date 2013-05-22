@@ -11,4 +11,11 @@ public class NullParser extends AbstractParser {
     @Override
     public void parse(String input) {
     }
+
+    @Override
+    public String getParserType() {
+        return "Null Parser";
+    }
+
+
 }

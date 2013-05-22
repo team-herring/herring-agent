@@ -39,4 +39,9 @@ public class JavaStackTraceParser  extends AbstractParser {
         }
         System.out.println("-------------------------------------");
     }
+
+    @Override
+    public String getParserType() {
+        return "Java StackTrace Parser";
+    }
 }
