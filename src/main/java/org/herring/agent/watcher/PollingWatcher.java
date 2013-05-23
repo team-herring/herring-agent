@@ -23,6 +23,8 @@ public class PollingWatcher implements Watcher {
     FileAlterationMonitor monitor;
     PollingEventListener listener;
 
+    int delay;
+
     public PollingWatcher(String target, int delay) {
         targetDirectory = new File(target);
 
@@ -32,7 +34,8 @@ public class PollingWatcher implements Watcher {
         observer.addListener(listener);
 
 
-        monitor = new FileAlterationMonitor(delay);
+        this.delay = delay;
+        monitor = new FileAlterationMonitor(this.delay);
 //        monitor = new FileAlterationMonitor(500);
         monitor.addObserver(observer);
     }
@@ -52,5 +55,9 @@ public class PollingWatcher implements Watcher {
         listener.addProcessor(processor);
     }
 
-
+    public String toString(){
+        return  "Type : Polling\n" +
+                "Target : "+this.targetDirectory+"\n" +
+                "Delay : "+this.delay+"\n";
+    }
 }

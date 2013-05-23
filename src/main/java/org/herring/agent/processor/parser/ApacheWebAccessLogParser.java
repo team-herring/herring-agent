@@ -58,7 +58,7 @@ public class ApacheWebAccessLogParser extends AbstractParser {
     }
 
     @Override
-    public String getParserType() {
+    public String getProcessorType() {
         return "Apache Web Access Log Parser";
     }
 }

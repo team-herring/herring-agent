@@ -6,10 +6,14 @@ import org.herring.agent.HerringAgent;
  * Date: 13. 4. 23.
  * Time: 오후 9:39
  * To change this template use File | Settings | File Templates.
- */
+*/
+
 public class AgentTest {
     public static void main(String[] args) {
         HerringAgent agent = new HerringAgent();
+        System.out.println("-----Agent Status-----");
+        System.out.println(agent.toString());
+        System.out.println("----------------------");
         agent.start();
     }
 }

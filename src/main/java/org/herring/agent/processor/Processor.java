@@ -10,4 +10,5 @@ package org.herring.agent.processor;
  */
 public interface Processor {
     void parse(String input);
+    String getProcessorType();
 }

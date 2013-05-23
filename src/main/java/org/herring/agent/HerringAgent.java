@@ -37,17 +37,20 @@ public class HerringAgent {
 
     private void loadConfiguration() throws ConfigurationException {
         configuration = new XMLConfiguration("config.xml");
+        configuration.load();
 
-        String watcherType = configuration.getString("agent.configuration.watcher.type", "polling");
-        String watcherTarget = configuration.getString("agent.configuration.watcher.target", "./");
-        String watcherDelay = configuration.getString("agent.configuration.watcher.delay", "500");
+        String watcherType = configuration.getString("configuration.watcher.type", "polling");
+        String watcherTarget = configuration.getString("configuration.watcher.target", "./");
+        String watcherDelay = configuration.getString("configuration.watcher.delay", "500");
         setWatcher(watcherType,watcherTarget,watcherDelay);
 
-        String processorType = configuration.getString("agent.configuration.processor.type", "nullparser");
+        String processorType = configuration.getString("configuration.processor.type", "nullparser");
+        System.out.println("processorType : "+processorType);
+//        String processorType = (String)configuration.getProperty("agent/configuration/processor/type");
         setProcessor(processorType);
 
-        String targetIP = configuration.getString("agent.configuration.target.ip");
-        String targetPort = configuration.getString("agent.configuation.target.port");
+        String targetIP = configuration.getString("configuration.target.ip");
+        String targetPort = configuration.getString("configuation.target.port");
     }
 
     private void setWatcher(String watcherType, String watcherTarget, String watcherDelay) throws NumberFormatException {
@@ -77,5 +80,12 @@ public class HerringAgent {
         } else {
             System.out.println("Processor Type Error!");
         }
+    }
+
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("==Watcher==\n"+watcher.toString());
+        builder.append("Processor Type : "+processor.getProcessorType()+"\n");
+        return builder.toString();
     }
 }

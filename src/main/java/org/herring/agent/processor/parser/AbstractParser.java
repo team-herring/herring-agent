@@ -12,6 +12,6 @@ public abstract class AbstractParser implements Processor {
     protected String regex;
 
     public abstract void parse(String input);
-    public abstract String getParserType();
+    public abstract String getProcessorType();
 
 }

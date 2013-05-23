@@ -41,7 +41,7 @@ public class JavaStackTraceParser  extends AbstractParser {
     }
 
     @Override
-    public String getParserType() {
+    public String getProcessorType() {
         return "Java StackTrace Parser";
     }
 }

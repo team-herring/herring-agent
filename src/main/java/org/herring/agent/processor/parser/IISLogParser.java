@@ -61,7 +61,7 @@ public class IISLogParser extends AbstractParser{
     }
 
     @Override
-    public String getParserType() {
+    public String getProcessorType() {
         return "IIS Web Log Parser";
     }
 }

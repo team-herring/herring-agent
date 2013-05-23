@@ -13,9 +13,8 @@ public class NullParser extends AbstractParser {
     }
 
     @Override
-    public String getParserType() {
+    public String getProcessorType() {
         return "Null Parser";
     }
-
 
 }
