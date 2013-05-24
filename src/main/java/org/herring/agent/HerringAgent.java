@@ -45,8 +45,6 @@ public class HerringAgent {
         setWatcher(watcherType,watcherTarget,watcherDelay);
 
         String processorType = configuration.getString("configuration.processor.type", "nullparser");
-        System.out.println("processorType : "+processorType);
-//        String processorType = (String)configuration.getProperty("agent/configuration/processor/type");
         setProcessor(processorType);
 
         String targetIP = configuration.getString("configuration.target.ip");
@@ -84,8 +82,9 @@ public class HerringAgent {
 
     public String toString(){
         StringBuilder builder = new StringBuilder();
-        builder.append("==Watcher==\n"+watcher.toString());
-        builder.append("Processor Type : "+processor.getProcessorType()+"\n");
+        builder.append("==Watcher==\n").append(watcher.toString());
+        builder.append("==Watcher==\n").append(watcher.toString());
+        builder.append("Processor Type : ").append(processor.getProcessorType()).append("\n");
         return builder.toString();
     }
 }

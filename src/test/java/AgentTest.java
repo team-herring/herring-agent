@@ -11,9 +11,9 @@ import org.herring.agent.HerringAgent;
 public class AgentTest {
     public static void main(String[] args) {
         HerringAgent agent = new HerringAgent();
-        System.out.println("-----Agent Status-----");
-        System.out.println(agent.toString());
-        System.out.println("----------------------");
+//        System.out.println("-----Agent Status-----");
+//        System.out.println(agent.toString());
+//        System.out.println("----------------------");
         agent.start();
     }
 }
