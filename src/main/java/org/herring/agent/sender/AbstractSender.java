@@ -15,6 +15,10 @@ public abstract class AbstractSender implements Sender{
     MessageHandler messageHandler;
     HerringCodec codec;
 
+    public AbstractSender(MessageHandler handler){
+        this.messageHandler = handler;
+    }
+
     @Override
     public abstract void send(String content);
 }
