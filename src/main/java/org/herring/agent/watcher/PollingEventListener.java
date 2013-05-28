@@ -2,6 +2,7 @@ package org.herring.agent.watcher;
 
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.herring.agent.HerringAgent;
 import org.herring.agent.util.AgentUtils;
 import org.herring.agent.processor.Processor;
 
@@ -17,19 +18,18 @@ import java.nio.channels.FileChannel;
  * User: hyunje
  * Date: 13. 5. 5.
  * Time: 오후 10:08
- * To change this template use File | Settings | File Templates.
  */
 public class PollingEventListener implements FileAlterationListener {
-    Processor parser;
+//    Processor parser;
     AgentUtils utils;
 
     public PollingEventListener(){
         utils = AgentUtils.getInstance();
     }
 
-    public void addProcessor(Processor processor){
-        this.parser = processor;
-    }
+//    public void addProcessor(Processor processor){
+//        this.parser = processor;
+//    }
 
     @Override
     public void onStart(FileAlterationObserver fileAlterationObserver) {
@@ -63,8 +63,13 @@ public class PollingEventListener implements FileAlterationListener {
             //Read from added File
             String readLine = ReadContentsFromFile(file, 0);
 
-            //Parse read line
-            parser.parse(readLine);
+//            Parse read line
+//            parser.matchRegex(readLine);
+
+            //Pass read lines to Processor
+            HerringAgent agent = HerringAgent.getInstance();
+            agent.parse(readLine);
+
 
             //Create a counted line number file
             CreateCountLineFile(file, readLine.length());
@@ -100,7 +105,12 @@ public class PollingEventListener implements FileAlterationListener {
             CreateCountLineFile(file,postReadLine);
 
             //Regular Expression Match
-            parser.parse(addedLine);
+//            parser.parse(addedLine);
+
+            //Pass read lines to Processor
+            HerringAgent agent = HerringAgent.getInstance();
+            agent.parse(addedLine);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

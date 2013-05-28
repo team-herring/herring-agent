@@ -1,7 +1,6 @@
 package org.herring.agent.processor.parser;
 
 import jregex.MatchIterator;
-import jregex.MatchResult;
 import jregex.Matcher;
 import jregex.Pattern;
 
@@ -41,10 +40,10 @@ public class ApacheWebAccessLogParser extends AbstractParser {
     }
 
     @Override
-    public void parse(String input) {
+    public MatchIterator matchRegex(String input) {
         if (regex.length() == 0) {
             System.out.println("Length of regex cannot be 0!");
-            return;
+            return null;
         }
         String trimmed_input = input.trim();
         System.out.println("-------------------------------------");
@@ -52,6 +51,8 @@ public class ApacheWebAccessLogParser extends AbstractParser {
         Pattern pattern = new Pattern(regex);
         Matcher matcher = pattern.matcher(trimmed_input);
         MatchIterator matchIterator = matcher.findAll();
+        return matchIterator;
+        /*
         while (matchIterator.hasMore()) {
             System.out.println("-------------------------------------");
             MatchResult matchResult = matchIterator.nextMatch();
@@ -61,7 +62,7 @@ public class ApacheWebAccessLogParser extends AbstractParser {
                 System.out.println("Group '" + column_name + "' : " + matchResult.group(column_name.toString()));
             }
         }
-
+        */
     }
 
     @Override

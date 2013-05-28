@@ -13,14 +13,21 @@ import org.herring.protocol.handler.MessageHandler;
  * Time: 오전 11:49
  */
 public final class BasicSender extends AbstractSender {
-    public BasicSender() {
+    private static BasicSender instance = null;
+
+    public static BasicSender getInstance(){
+        if (instance == null){
+            instance = new BasicSender();
+        }
+        return instance;
+    }
+
+    private BasicSender() {
     }
 
     @Override
     public void setMessageHandler(MessageHandler handler) {
         this.messageHandler = handler;
-
-
     }
 
     @Override

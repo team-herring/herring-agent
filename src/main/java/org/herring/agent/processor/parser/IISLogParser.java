@@ -40,10 +40,10 @@ public class IISLogParser extends AbstractParser {
     }
 
     @Override
-    public void parse(String input) {
+    public MatchIterator matchRegex(String input) {
         if (regex.length() == 0) {
             System.out.println("Length of regex cannot be 0!");
-            return;
+            return null;
         }
         String trimmed_input = input.trim();
         System.out.println("-------------------------------------");
@@ -53,6 +53,9 @@ public class IISLogParser extends AbstractParser {
         MatchIterator matchIterator = matcher.findAll();
         System.out.println("-------------------------------------");
         System.out.println("Matched Size : " + matchIterator.count());
+        System.out.println("-------------------------------------");
+
+        return matchIterator;
 /*
         while (matchIterator.hasMore()){
             MatchResult matchResult = matchIterator.nextMatch();
@@ -64,7 +67,6 @@ public class IISLogParser extends AbstractParser {
             }
         }
 */
-        System.out.println("-------------------------------------");
     }
 
     @Override

@@ -1,11 +1,14 @@
 package org.herring.agent.processor.parser;
 
 
+import jregex.MatchIterator;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Parser for JavaStackTrace
+ * Java Stack Trace 를 위한 Parser.
+ * 하지만 아직 미완. 수정되어야 한다.
  * User: hyunje
  * Date: 13. 5. 8.
  * Time: 오후 10:56
@@ -24,8 +27,16 @@ public class JavaStackTraceParser extends AbstractParser {
         return instance;
     }
 
+    /**
+     * 수정되어야 한다.
+     * @param input
+     * @return
+     */
     @Override
-    public void parse(String input) {
+    public MatchIterator matchRegex(String input) {
+        /*
+        수정되어야 하는 함수.
+         */
         if (regex.length() == 0) {
             System.out.println("Regex's length cannot be 0!");
         }
@@ -45,6 +56,9 @@ public class JavaStackTraceParser extends AbstractParser {
             System.out.println("===========================");
         }
         System.out.println("-------------------------------------");
+
+
+        return null;
     }
 
     @Override
