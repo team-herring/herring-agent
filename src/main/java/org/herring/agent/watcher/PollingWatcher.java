@@ -18,10 +18,10 @@ import java.io.File;
  * Time: 오후 9:39
  */
 public class PollingWatcher implements Watcher {
-    File targetDirectory;
-    FileAlterationObserver observer;
-    FileAlterationMonitor monitor;
-    PollingEventListener listener;
+    File targetDirectory = null;
+    FileAlterationObserver observer = null;
+    FileAlterationMonitor monitor = null;
+    PollingEventListener listener = null;
 
     int delay;
 

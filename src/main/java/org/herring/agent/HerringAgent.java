@@ -70,17 +70,17 @@ public class HerringAgent {
     private void setProcessor(String processorType){
 
         if("IISLogParser".toLowerCase().equals(processorType.toLowerCase())){
-            processor = new IISLogParser();
+            processor = IISLogParser.getInstance();
             this.watcher.setProcessor(processor);
         } else if("ApacheWebAccessLogParser".toLowerCase().equals(processorType.toLowerCase())){
-            processor = new ApacheWebAccessLogParser();
+            processor = ApacheWebAccessLogParser.getInstance();
             this.watcher.setProcessor(processor);
         } else if("JavaStackTraceParser".toLowerCase().equals(processorType.toLowerCase())){
-            processor = new JavaStackTraceParser();
+            processor = JavaStackTraceParser.getInstance();
             this.watcher.setProcessor(processor);
 
         } else if("NullParser".toLowerCase().equals(processorType.toLowerCase())){
-            processor = new NullParser();
+            processor = NullParser.getInstance();
             this.watcher.setProcessor(processor);
         } else {
             System.out.println("Processor Type Error!");
