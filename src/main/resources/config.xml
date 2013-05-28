@@ -8,10 +8,15 @@
         </watcher>
         <processor>
             <type>iislogparser</type>
+            <rowdelimiter>::herring_row::</rowdelimiter>
+            <columndelimiter>::herring_column::</columndelimiter>
+            <datadelimiter>::herring_data::</datadelimiter>
         </processor>
-        <target>
-            <ip>61.43.139.117</ip>
-            <port>8989</port>
-        </target>
+        <sender>
+            <target>
+                <host>61.43.139.117</host>
+                <port>8989</port>
+            </target>
+        </sender>
     </configuration>
 </agent>

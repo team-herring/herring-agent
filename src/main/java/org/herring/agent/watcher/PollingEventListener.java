@@ -2,7 +2,7 @@ package org.herring.agent.watcher;
 
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
-import org.herring.agent.AgentUtils;
+import org.herring.agent.util.AgentUtils;
 import org.herring.agent.processor.Processor;
 
 import java.io.File;
@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-
-import static org.herring.agent.AgentUtils.isReadableFile;
 
 /**
  * Event Listener for PollingWatcher
@@ -23,6 +21,11 @@ import static org.herring.agent.AgentUtils.isReadableFile;
  */
 public class PollingEventListener implements FileAlterationListener {
     Processor parser;
+    AgentUtils utils;
+
+    public PollingEventListener(){
+        utils = AgentUtils.getInstance();
+    }
 
     public void addProcessor(Processor processor){
         this.parser = processor;
@@ -50,7 +53,7 @@ public class PollingEventListener implements FileAlterationListener {
 
     @Override
     public void onFileCreate(File file) {
-        if (!isReadableFile(file)) return;
+        if (!utils.isReadableFile(file)) return;
 
         System.out.println("File was created : " + file.getName());
         System.out.println("Read file : ");
@@ -75,10 +78,10 @@ public class PollingEventListener implements FileAlterationListener {
 
     @Override
     public void onFileChange(File file) {
-        if (!isReadableFile(file)) return;
+        if (!utils.isReadableFile(file)) return;
         System.out.println("File was changed : " + file.getName());
         try {
-            File countFile = new File(file.getAbsolutePath() + "." + AgentUtils.Constants.readCountSuffix);
+            File countFile = new File(file.getAbsolutePath() + "." + utils.readCountSuffix);
             if (!countFile.exists()) {
                 System.out.println("Count file does not exist.");
                 return;
@@ -110,7 +113,7 @@ public class PollingEventListener implements FileAlterationListener {
     private String ReadContentsFromFile(File file, int position) throws IOException {
         RandomAccessFile addedFile = new RandomAccessFile(file.getAbsolutePath(), "r");
         FileChannel addedFileChannel = addedFile.getChannel();
-        ByteBuffer addedFileBuffer = ByteBuffer.allocate(AgentUtils.Constants.BufferSize);
+        ByteBuffer addedFileBuffer = ByteBuffer.allocate(utils.BufferSize);
         addedFileBuffer.clear();
         addedFileChannel.position(position);
         int byteRead = addedFileChannel.read(addedFileBuffer);
@@ -137,10 +140,10 @@ public class PollingEventListener implements FileAlterationListener {
     }
 
     private void CreateCountLineFile(File file, int countLine) throws IOException{
-        RandomAccessFile countFile = new RandomAccessFile(file.getAbsolutePath()+"."+ AgentUtils.Constants.readCountSuffix,"rw");
+        RandomAccessFile countFile = new RandomAccessFile(file.getAbsolutePath()+"."+ utils.readCountSuffix,"rw");
         countFile.setLength(0);
         FileChannel countFileChannel = countFile.getChannel();
-        ByteBuffer buffer = ByteBuffer.allocate(AgentUtils.Constants.BufferSize);
+        ByteBuffer buffer = ByteBuffer.allocate(utils.BufferSize);
 
         System.out.println("New Count : " + countLine);
 

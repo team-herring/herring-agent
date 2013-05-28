@@ -11,21 +11,14 @@ import org.herring.protocol.handler.MessageHandler;
  * Time: 오전 10:01
  */
 public abstract class AbstractSender implements Sender{
+    String uuid;
     ClientComponent clientComponent;
     MessageHandler messageHandler;
     HerringCodec codec;
 
-    public AbstractSender(MessageHandler handler){
-        this.messageHandler = handler;
-    }
-
-    public void setClientComponent(ClientComponent component){
-        this.clientComponent = component;
-    }
-    public void setCodec(HerringCodec codec){
-        this.codec = codec;
-    }
-
+    public abstract void setMessageHandler(MessageHandler handler);
+    public abstract void readyForConnection();
+    public abstract void setCodec(HerringCodec codec);
     @Override
     public abstract void send(String content);
 }

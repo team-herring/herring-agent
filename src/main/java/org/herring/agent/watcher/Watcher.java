@@ -11,4 +11,5 @@ import org.herring.agent.processor.Processor;
 public interface Watcher {
     void startWatching();
     void setProcessor(Processor processor);
+    void setConfiguration(String target, int delay);
 }

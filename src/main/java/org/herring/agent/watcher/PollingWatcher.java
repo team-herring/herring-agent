@@ -25,7 +25,16 @@ public class PollingWatcher implements Watcher {
 
     int delay;
 
-    public PollingWatcher(String target, int delay) {
+    private static PollingWatcher instance = null;
+
+    public static PollingWatcher getInstance() {
+        if (instance == null)
+            instance = new PollingWatcher();
+
+        return instance;
+    }
+
+    public void setConfiguration(String target, int delay) {
         targetDirectory = new File(target);
 
         listener = new PollingEventListener();

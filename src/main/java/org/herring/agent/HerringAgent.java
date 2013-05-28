@@ -7,25 +7,36 @@ import org.herring.agent.processor.parser.ApacheWebAccessLogParser;
 import org.herring.agent.processor.parser.IISLogParser;
 import org.herring.agent.processor.parser.JavaStackTraceParser;
 import org.herring.agent.processor.parser.NullParser;
+import org.herring.agent.util.AgentUtils;
 import org.herring.agent.watcher.PollingWatcher;
 import org.herring.agent.watcher.Watcher;
+import java.util.UUID;
 
 /**
  * Herring의 Agent 클래스.
  * config.xml에서 설정 값을 가져온다.
+ *  1. Configuration 읽기
+ *  2. 읽은 Configuation 을 이용해 Cruiser 와 통신
+ *  3. 통신 성공하면 Agent 실행과 데이터 전송 시작
  *
  * User: hyunje
  * Date: 13. 5. 20.
  * Time: 오전 10:56
  */
 public class HerringAgent {
+    String agentUUID;
     XMLConfiguration configuration;
     Watcher watcher;
     Processor processor;
 
     public HerringAgent() {
         try {
+            agentUUID = UUID.randomUUID().toString();
             loadConfiguration();
+
+
+
+
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
@@ -35,26 +46,22 @@ public class HerringAgent {
         watcher.startWatching();
     }
 
+    private void connectToCruiser(){
+
+    }
+
     private void loadConfiguration() throws ConfigurationException {
-        configuration = new XMLConfiguration("config.xml");
-        configuration.load();
+        AgentUtils utils = AgentUtils.getInstance();
 
-        String watcherType = configuration.getString("configuration.watcher.type", "polling");
-        String watcherTarget = configuration.getString("configuration.watcher.target", "./");
-        String watcherDelay = configuration.getString("configuration.watcher.delay", "500");
-        setWatcher(watcherType,watcherTarget,watcherDelay);
-
-        String processorType = configuration.getString("configuration.processor.type", "nullparser");
-        setProcessor(processorType);
-
-        String targetIP = configuration.getString("configuration.target.ip");
-        String targetPort = configuration.getString("configuation.target.port");
+        setWatcher(utils.watcherType,utils.watcherTarget,utils.watcherDelay);
+        setProcessor(utils.processorType);
     }
 
     private void setWatcher(String watcherType, String watcherTarget, String watcherDelay) throws NumberFormatException {
         if ("polling".equals(watcherType)) {
             int delay = Integer.parseInt(watcherDelay);
-            this.watcher = new PollingWatcher(watcherTarget, delay);
+            this.watcher = PollingWatcher.getInstance();
+            this.watcher.setConfiguration(watcherTarget,delay);
         }else {
             System.out.println("Polling Type Error!");
         }
