@@ -14,5 +14,6 @@ import jregex.MatchIterator;
  */
 public interface Processor {
     MatchIterator matchRegex(String input);
+    String matchIteratorToString(MatchIterator matchIterator);
     String getProcessorType();
 }

@@ -2,6 +2,8 @@ package org.herring.agent.processor.parser;
 
 
 import jregex.MatchIterator;
+import jregex.MatchResult;
+import org.herring.agent.util.AgentUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,4 +67,25 @@ public class JavaStackTraceParser extends AbstractParser {
     public String getProcessorType() {
         return "Java StackTrace Parser";
     }
+
+    @Override
+    public String matchIteratorToString(MatchIterator matchIterator) {
+        AgentUtils utils = AgentUtils.getInstance();
+        String rowDelim = utils.rowDelimiter;
+        String columnDelim = utils.columnDelimiter;
+        String dataDelim = utils.dataDelimiter;
+
+        StringBuilder builder = new StringBuilder();
+        while (matchIterator.hasMore()){
+            MatchResult matchResult = matchIterator.nextMatch();
+            for(COLUMN_NAME column_name : COLUMN_NAME.values()){
+                builder.append(column_name).append(dataDelim).append(matchResult.group(column_name.toString())).append(columnDelim);
+            }
+            builder.substring(0,builder.toString().length()-columnDelim.length());
+            builder.append(rowDelim);
+        }
+        return builder.toString();
+    }
+
+    enum COLUMN_NAME{}
 }

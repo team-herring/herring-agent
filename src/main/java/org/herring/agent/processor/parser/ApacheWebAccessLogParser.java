@@ -1,8 +1,10 @@
 package org.herring.agent.processor.parser;
 
 import jregex.MatchIterator;
+import jregex.MatchResult;
 import jregex.Matcher;
 import jregex.Pattern;
+import org.herring.agent.util.AgentUtils;
 
 /**
  * Apache Web Access Log 파서
@@ -50,8 +52,7 @@ public class ApacheWebAccessLogParser extends AbstractParser {
         System.out.println("Input : " + trimmed_input);
         Pattern pattern = new Pattern(regex);
         Matcher matcher = pattern.matcher(trimmed_input);
-        MatchIterator matchIterator = matcher.findAll();
-        return matchIterator;
+        return matcher.findAll();
         /*
         while (matchIterator.hasMore()) {
             System.out.println("-------------------------------------");
@@ -68,6 +69,25 @@ public class ApacheWebAccessLogParser extends AbstractParser {
     @Override
     public String getProcessorType() {
         return "Apache Web Access Log Parser";
+    }
+
+    @Override
+    public String matchIteratorToString(MatchIterator matchIterator) {
+        AgentUtils utils = AgentUtils.getInstance();
+        String rowDelim = utils.rowDelimiter;
+        String columnDelim = utils.columnDelimiter;
+        String dataDelim = utils.dataDelimiter;
+
+        StringBuilder builder = new StringBuilder();
+        while (matchIterator.hasMore()){
+            MatchResult matchResult = matchIterator.nextMatch();
+            for(COLUMN_NAME column_name : COLUMN_NAME.values()){
+                builder.append(column_name).append(dataDelim).append(matchResult.group(column_name.toString())).append(columnDelim);
+            }
+            builder.substring(0,builder.toString().length()-columnDelim.length());
+            builder.append(rowDelim);
+        }
+        return builder.toString();
     }
 
     enum COLUMN_NAME {

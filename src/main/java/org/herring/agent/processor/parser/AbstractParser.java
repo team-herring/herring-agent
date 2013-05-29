@@ -14,5 +14,5 @@ public abstract class AbstractParser implements Processor {
 
     public abstract MatchIterator matchRegex(String input);
     public abstract String getProcessorType();
-
+    public abstract String matchIteratorToString(MatchIterator matchIterator);
 }

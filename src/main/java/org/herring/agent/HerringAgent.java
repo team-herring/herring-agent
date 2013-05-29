@@ -45,7 +45,6 @@ public class HerringAgent {
             e.printStackTrace();
         }
     }
-
     public static HerringAgent getInstance() {
         if (instance == null) {
             instance = new HerringAgent();
@@ -63,9 +62,11 @@ public class HerringAgent {
 
     public void parse(String data){
         MatchIterator matchIterator = processor.matchRegex(data);
+        int rowCount = matchIterator.count();
         //TODO
         //Match Result 를 통해서 Sender에 Matching 된 결과 전송.
         //Sender에서는 Match Result를 이용해 Host에 전송.
+        String parsedString = processor.matchIteratorToString(matchIterator);
     }
 
     private void loadConfiguration() throws ConfigurationException {
