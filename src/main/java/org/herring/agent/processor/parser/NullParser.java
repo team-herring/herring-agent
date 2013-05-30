@@ -32,4 +32,9 @@ public class NullParser extends AbstractParser {
         return "Null Parser";
     }
 
+    @Override
+    public String matchIteratorToString(MatchIterator matchIterator) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 }

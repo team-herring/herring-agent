@@ -12,7 +12,6 @@ import java.io.File;
  * Time: 오후 6:06
  */
 public class AgentUtils {
-    private XMLConfiguration configuration;
 
     public String watcherType;
     public String watcherTarget;
@@ -24,6 +23,9 @@ public class AgentUtils {
 
     public String readCountSuffix = "count";
     public int BufferSize = 256;
+
+    public String host;
+    public String port;
 
     private static AgentUtils instance = null;
 
@@ -37,7 +39,7 @@ public class AgentUtils {
 
     private AgentUtils(){
         try {
-            configuration = new XMLConfiguration("config.xml");
+            XMLConfiguration configuration = new XMLConfiguration("config.xml");
             configuration.load();
 
             watcherType = configuration.getString("configuration.watcher.type", "polling");
@@ -50,6 +52,8 @@ public class AgentUtils {
             columnDelimiter = configuration.getString("configuration.sender.processor.columndelimiter");
             dataDelimiter = configuration.getString("configuration.sender.processor.datadelimiter");
 
+            host = configuration.getString("configuration.sender.target.host");
+            port = configuration.getString("configuration.sender.target.port");
 
         } catch (ConfigurationException e) {
             e.printStackTrace();
@@ -57,19 +61,9 @@ public class AgentUtils {
 
     }
 
-
-
-
-
-
-
-
     public boolean isReadableFile(File file){
         return !(file.getName().endsWith("." + readCountSuffix) ||
                 file.getName().startsWith("."));
-
-    }
-    public static class Constants {
 
     }
 }
