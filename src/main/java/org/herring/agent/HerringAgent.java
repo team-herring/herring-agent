@@ -2,7 +2,6 @@ package org.herring.agent;
 
 import jregex.MatchIterator;
 import org.apache.commons.configuration.ConfigurationException;
-import org.herring.agent.handler.AgentCruiserConnectionHandler;
 import org.herring.agent.processor.Processor;
 import org.herring.agent.processor.parser.ApacheWebAccessLogParser;
 import org.herring.agent.processor.parser.IISLogParser;
@@ -13,9 +12,7 @@ import org.herring.agent.sender.Sender;
 import org.herring.agent.util.AgentUtils;
 import org.herring.agent.watcher.PollingWatcher;
 import org.herring.agent.watcher.Watcher;
-import org.herring.core.cruiser.model.CruiserAgentConnectionCodec;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
-import org.herring.protocol.ClientComponent;
 
 import java.util.UUID;
 
@@ -35,12 +32,11 @@ import java.util.UUID;
 public class HerringAgent {
 
     private static HerringAgent instance = null;
-
     String agentUUID;
     Watcher watcher;
     Processor processor;
     Sender sender;
-    ClientComponent connectionComponent;
+    //    ClientComponent connectionComponent;
     CruiserAgentConnectionObject connectionObject;
 
     private HerringAgent() {
@@ -48,7 +44,7 @@ public class HerringAgent {
             agentUUID = UUID.randomUUID().toString();
 
             AgentUtils utils = AgentUtils.getInstance();
-            connectionObject = new CruiserAgentConnectionObject(agentUUID,true,utils.rowDelimiter,utils.columnDelimiter,utils.dataDelimiter);
+            connectionObject = new CruiserAgentConnectionObject(agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
 
             loadConfiguration();
 
@@ -68,6 +64,7 @@ public class HerringAgent {
         watcher.startWatching();
     }
 
+    /*
     private void connectToCruiser() {
         try {
             AgentUtils utils = AgentUtils.getInstance();
@@ -82,24 +79,16 @@ public class HerringAgent {
             System.out.println("Cruiser에 연결 정보를 전송합니다.");
             connectionComponent.getChannel().write(connectionObject).channel().flush().await();
             System.out.println("Cruiser의 응답을 기다립니다.");
-
-
-
-
-
-
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+*/
 
     /**
      * WatchingEventListener 에서 감지된 String을 Agent의 Processor로 전달하여 Regular Expression Mathcing 수행
      * Parsing 된 결과를 Sender를 통해 전송한다.
+     *
      * @param data EventListener에서 감지된 String
      */
     public void parse(String data) {
