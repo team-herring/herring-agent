@@ -1,3 +1,5 @@
+package org.herring.agent.generator;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -13,7 +15,7 @@ import java.util.Random;
  * Date: 13. 5. 16.
  * Time: 오전 10:13
  */
-public class LogGenerator {
+public class IISLogGeneratorToFile {
 
     public static void main(String[] args) {
 
@@ -72,7 +74,7 @@ public class LogGenerator {
 
         try {
 //            Properties properties = new Properties();
-//            ClassLoader loader = LogGenerator.class.getClassLoader();
+//            ClassLoader loader = org.herring.agent.generator.IISLogGeneratorToFile.class.getClassLoader();
 //            InputStream stream = loader.getResourceAsStream("/Users/hyunje/Desktop/generator.properties");
 //            FileInputStream stream = new FileInputStream("/Users/hyunje/Desktop/generator.properties");
 //            properties.load(new BufferedInputStream(stream));
