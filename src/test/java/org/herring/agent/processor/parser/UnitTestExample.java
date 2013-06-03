@@ -11,7 +11,7 @@ import org.junit.runners.MethodSorters;
  */
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AbstractParserTest {
+public class UnitTestExample {
 
     @Test
     public void parserTest()throws Exception{
