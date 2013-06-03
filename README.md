@@ -2,6 +2,12 @@
 Herring Project의 Log Collector 역할을 맡은 프로그램.
 유스케이스 "로그 스트리밍", "데이터 소스 등록"과 밀접한 연관성을 갖는다.
 
+##Architecture
+![Agent Architecture](http://jo.hyunje.com:8080/fbsharing/XfVs40Wk)
+
+회색 부분은 외부 라이브러리를 사용한 부분이고, 흰색 부분은 직접 구현 한 부분이다. 아직 Sender 부분이 제대로 구현되어 있지 않다.
+
+
 ##config.xml
 ```
 <agent>
