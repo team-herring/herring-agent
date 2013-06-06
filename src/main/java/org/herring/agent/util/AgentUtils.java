@@ -48,9 +48,9 @@ public class AgentUtils {
 
             processorType = configuration.getString("configuration.processor.type", "nullparser");
 
-            rowDelimiter = configuration.getString("configuration.sender.processor.rowdelimiter");
-            columnDelimiter = configuration.getString("configuration.sender.processor.columndelimiter");
-            dataDelimiter = configuration.getString("configuration.sender.processor.datadelimiter");
+            rowDelimiter = configuration.getString("configuration.processor.rowdelimiter");
+            columnDelimiter = configuration.getString("configuration.processor.columndelimiter");
+            dataDelimiter = configuration.getString("configuration.processor.datadelimiter");
 
             host = configuration.getString("configuration.sender.target.host");
             port = configuration.getString("configuration.sender.target.port");

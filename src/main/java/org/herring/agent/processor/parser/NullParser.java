@@ -1,6 +1,7 @@
 package org.herring.agent.processor.parser;
 
 import jregex.MatchIterator;
+import jregex.Matcher;
 
 /**
  * 아무 Parsing도 하지 않고 그대로 읽은 데이터를 전송하는 parser.
@@ -23,7 +24,7 @@ public class NullParser extends AbstractParser {
     }
 
     @Override
-    public MatchIterator matchRegex(String input) {
+    public Matcher matchRegex(String input) {
         return null;
     }
 
@@ -33,7 +34,7 @@ public class NullParser extends AbstractParser {
     }
 
     @Override
-    public String matchIteratorToString(MatchIterator matchIterator) {
+    public String packageMatchingResult(Matcher matcher) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

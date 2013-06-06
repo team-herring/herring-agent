@@ -42,17 +42,15 @@ public class ApacheWebAccessLogParser extends AbstractParser {
     }
 
     @Override
-    public MatchIterator matchRegex(String input) {
+    public Matcher matchRegex(String input) {
         if (regex.length() == 0) {
             System.out.println("Length of regex cannot be 0!");
             return null;
         }
         String trimmed_input = input.trim();
-        System.out.println("-------------------------------------");
-        System.out.println("Input : " + trimmed_input);
         Pattern pattern = new Pattern(regex);
         Matcher matcher = pattern.matcher(trimmed_input);
-        return matcher.findAll();
+        return matcher;
         /*
         while (matchIterator.hasMore()) {
             System.out.println("-------------------------------------");
@@ -72,7 +70,8 @@ public class ApacheWebAccessLogParser extends AbstractParser {
     }
 
     @Override
-    public String matchIteratorToString(MatchIterator matchIterator) {
+    public String packageMatchingResult(Matcher matcher) {
+        MatchIterator matchIterator = matcher.findAll();
         AgentUtils utils = AgentUtils.getInstance();
         String rowDelim = utils.rowDelimiter;
         String columnDelim = utils.columnDelimiter;

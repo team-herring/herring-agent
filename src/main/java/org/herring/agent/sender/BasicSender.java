@@ -1,9 +1,9 @@
 package org.herring.agent.sender;
 
 import org.apache.commons.configuration.XMLConfiguration;
-import org.herring.protocol.ClientComponent;
-import org.herring.protocol.codec.HerringCodec;
-import org.herring.protocol.handler.MessageHandler;
+import org.herring.core.protocol.ClientComponent;
+import org.herring.core.protocol.codec.HerringCodec;
+import org.herring.core.protocol.handler.MessageHandler;
 
 /**
  * 가장 기본적인 Sender.
@@ -15,14 +15,14 @@ import org.herring.protocol.handler.MessageHandler;
 public final class BasicSender extends AbstractSender {
     private static BasicSender instance = null;
 
-    public static BasicSender getInstance(){
-        if (instance == null){
+    private BasicSender() {
+    }
+
+    public static BasicSender getInstance() {
+        if (instance == null) {
             instance = new BasicSender();
         }
         return instance;
-    }
-
-    private BasicSender() {
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.herring.agent.processor.parser;
 
 import jregex.MatchIterator;
+import jregex.Matcher;
 import org.herring.agent.processor.Processor;
 
 /**
@@ -12,7 +13,7 @@ import org.herring.agent.processor.Processor;
 public abstract class AbstractParser implements Processor {
     protected String regex;
 
-    public abstract MatchIterator matchRegex(String input);
+    public abstract Matcher matchRegex(String input);
     public abstract String getProcessorType();
-    public abstract String matchIteratorToString(MatchIterator matchIterator);
+    public abstract String packageMatchingResult(Matcher matcher);
 }

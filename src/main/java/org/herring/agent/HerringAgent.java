@@ -1,11 +1,11 @@
 package org.herring.agent;
 
 import jregex.MatchIterator;
+import jregex.Matcher;
 import org.apache.commons.configuration.ConfigurationException;
 import org.herring.agent.processor.Processor;
 import org.herring.agent.processor.parser.ApacheWebAccessLogParser;
 import org.herring.agent.processor.parser.IISLogParser;
-import org.herring.agent.processor.parser.JavaStackTraceParser;
 import org.herring.agent.processor.parser.NullParser;
 import org.herring.agent.sender.BasicSender;
 import org.herring.agent.sender.Sender;
@@ -92,12 +92,13 @@ public class HerringAgent {
      * @param data EventListener에서 감지된 String
      */
     public void parse(String data) {
-        MatchIterator matchIterator = processor.matchRegex(data);
+        Matcher matcher = processor.matchRegex(data);
+        MatchIterator matchIterator = matcher.findAll();
         int rowCount = matchIterator.count();
         //TODO
         //Match Result 를 통해서 Sender에 Matching 된 결과 전송.
         //Sender에서는 Match Result를 이용해 Host에 전송.
-        String parsedString = processor.matchIteratorToString(matchIterator);
+        String parsedString = processor.packageMatchingResult(matcher);
     }
 
     private void loadConfiguration() throws ConfigurationException {
@@ -131,10 +132,6 @@ public class HerringAgent {
         } else if ("ApacheWebAccessLogParser".toLowerCase().equals(processorType.toLowerCase())) {
             processor = ApacheWebAccessLogParser.getInstance();
             this.watcher.setProcessor(processor);
-        } else if ("JavaStackTraceParser".toLowerCase().equals(processorType.toLowerCase())) {
-            processor = JavaStackTraceParser.getInstance();
-            this.watcher.setProcessor(processor);
-
         } else if ("NullParser".toLowerCase().equals(processorType.toLowerCase())) {
             processor = NullParser.getInstance();
             this.watcher.setProcessor(processor);
