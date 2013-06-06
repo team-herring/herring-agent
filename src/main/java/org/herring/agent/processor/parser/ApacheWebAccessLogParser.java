@@ -51,17 +51,6 @@ public class ApacheWebAccessLogParser extends AbstractParser {
         Pattern pattern = new Pattern(regex);
         Matcher matcher = pattern.matcher(trimmed_input);
         return matcher;
-        /*
-        while (matchIterator.hasMore()) {
-            System.out.println("-------------------------------------");
-            MatchResult matchResult = matchIterator.nextMatch();
-            int gc = matchResult.groupCount();
-            System.out.println("Group Count :" + gc);
-            for (COLUMN_NAME column_name : COLUMN_NAME.values()) {
-                System.out.println("Group '" + column_name + "' : " + matchResult.group(column_name.toString()));
-            }
-        }
-        */
     }
 
     @Override
