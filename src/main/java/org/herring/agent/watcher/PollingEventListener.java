@@ -104,9 +104,6 @@ public class PollingEventListener implements FileAlterationListener {
             int postReadLine = preReadLine + addedLine.length();
             CreateCountLineFile(file,postReadLine);
 
-            //Regular Expression Match
-//            parser.parse(addedLine);
-
             //Pass read lines to Processor
             HerringAgent agent = HerringAgent.getInstance();
             agent.parse(addedLine);

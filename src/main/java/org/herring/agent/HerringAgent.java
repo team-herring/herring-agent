@@ -12,7 +12,9 @@ import org.herring.agent.sender.Sender;
 import org.herring.agent.util.AgentUtils;
 import org.herring.agent.watcher.PollingWatcher;
 import org.herring.agent.watcher.Watcher;
+import org.herring.core.cruiser.model.CruiserAgentConnectionCodec;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
+import org.herring.core.protocol.ClientComponent;
 
 import java.util.UUID;
 
@@ -36,7 +38,7 @@ public class HerringAgent {
     Watcher watcher;
     Processor processor;
     Sender sender;
-    //    ClientComponent connectionComponent;
+    ClientComponent connectionComponent;
     CruiserAgentConnectionObject connectionObject;
 
     private HerringAgent() {
@@ -64,7 +66,7 @@ public class HerringAgent {
         watcher.startWatching();
     }
 
-    /*
+/*
     private void connectToCruiser() {
         try {
             AgentUtils utils = AgentUtils.getInstance();

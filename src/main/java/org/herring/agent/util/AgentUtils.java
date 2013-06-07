@@ -13,6 +13,7 @@ import java.io.File;
  */
 public class AgentUtils {
 
+
     public String watcherType;
     public String watcherTarget;
     public String watcherDelay;
@@ -20,24 +21,12 @@ public class AgentUtils {
     public String rowDelimiter;
     public String columnDelimiter;
     public String dataDelimiter;
-
     public String readCountSuffix = "count";
     public int BufferSize = 256;
-
     public String host;
     public String port;
 
-    private static AgentUtils instance = null;
-
-    public static AgentUtils getInstance(){
-        if(instance == null){
-            instance = new AgentUtils();
-        }
-        return instance;
-    }
-
-
-    private AgentUtils(){
+    private AgentUtils() {
         try {
             XMLConfiguration configuration = new XMLConfiguration("config.xml");
             configuration.load();
@@ -61,9 +50,17 @@ public class AgentUtils {
 
     }
 
-    public boolean isReadableFile(File file){
+    public static AgentUtils getInstance() {
+        return AgentUtilsHolder.INSTANCE;
+    }
+
+    public boolean isReadableFile(File file) {
         return !(file.getName().endsWith("." + readCountSuffix) ||
                 file.getName().startsWith("."));
 
+    }
+
+    private static final class AgentUtilsHolder {
+        private static final AgentUtils INSTANCE = new AgentUtils();
     }
 }
