@@ -15,7 +15,7 @@ public class AgentUtils {
 
 
     public String watcherType;
-    public String watcherTarget;
+    public String watcherTarget;{}
     public String watcherDelay;
     public String processorType;
     public String rowDelimiter;
@@ -29,7 +29,6 @@ public class AgentUtils {
     private AgentUtils() {
         try {
             XMLConfiguration configuration = new XMLConfiguration("config.xml");
-            configuration.load();
 
             watcherType = configuration.getString("configuration.watcher.type", "polling");
             watcherTarget = configuration.getString("configuration.watcher.target", "./");
