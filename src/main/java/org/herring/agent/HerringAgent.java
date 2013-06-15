@@ -10,9 +10,8 @@ import org.herring.agent.processor.parser.NullParser;
 import org.herring.agent.sender.BasicSender;
 import org.herring.agent.sender.Sender;
 import org.herring.agent.util.AgentUtils;
-import org.herring.agent.watcher.PollingWatcher;
+import org.herring.agent.watcher.polling.PollingWatcher;
 import org.herring.agent.watcher.Watcher;
-import org.herring.core.cruiser.model.CruiserAgentConnectionCodec;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
 import org.herring.core.protocol.ClientComponent;
 
@@ -101,6 +100,7 @@ public class HerringAgent {
         //Match Result 를 통해서 Sender에 Matching 된 결과 전송.
         //Sender에서는 Match Result를 이용해 Host에 전송.
         String parsedString = processor.packageMatchingResult(matcher);
+
     }
 
     private void loadConfiguration() throws ConfigurationException {

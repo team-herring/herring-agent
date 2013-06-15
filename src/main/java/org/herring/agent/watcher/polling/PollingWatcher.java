@@ -1,10 +1,10 @@
-package org.herring.agent.watcher;
+package org.herring.agent.watcher.polling;
 
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.herring.agent.processor.Processor;
-import org.herring.agent.processor.parser.IISLogParser;
+import org.herring.agent.watcher.Watcher;
 
 import java.io.File;
 
