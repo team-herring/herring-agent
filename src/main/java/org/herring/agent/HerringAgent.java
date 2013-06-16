@@ -10,10 +10,13 @@ import org.herring.agent.processor.parser.NullParser;
 import org.herring.agent.sender.BasicSender;
 import org.herring.agent.sender.Sender;
 import org.herring.agent.util.AgentUtils;
-import org.herring.agent.watcher.polling.PollingWatcher;
 import org.herring.agent.watcher.Watcher;
+import org.herring.agent.watcher.polling.PollingWatcher;
+import org.herring.core.cruiser.model.CruiserAgentConnectionCodec;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
 import org.herring.core.protocol.ClientComponent;
+import org.herring.core.protocol.handler.MessageHandler;
+import org.herring.core.protocol.handler.SyncMessageHandler;
 
 import java.util.UUID;
 
@@ -26,6 +29,10 @@ import java.util.UUID;
  * <p/>
  * Singleton 형태이기 때문에, 여러 target을 watching 하기 위해서는 리팩토링 필요.
  * <p/>
+ * <p/>
+ * <p/>
+ * TODO:!!Refactoring!!
+ * <p/>
  * User: hyunje
  * Date: 13. 5. 20.
  * Time: 오전 10:56
@@ -33,6 +40,7 @@ import java.util.UUID;
 public class HerringAgent {
 
     private static HerringAgent instance = null;
+    private boolean isConnected = false;
     String agentUUID;
     Watcher watcher;
     Processor processor;
@@ -49,6 +57,8 @@ public class HerringAgent {
 
             loadConfiguration();
 
+            connectToCruiser();
+
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
@@ -61,34 +71,34 @@ public class HerringAgent {
         return instance;
     }
 
-    public void start() {
-        watcher.startWatching();
-    }
-
-/*
     private void connectToCruiser() {
         try {
             AgentUtils utils = AgentUtils.getInstance();
-            String host = utils.host;
-            int port = Integer.parseInt(utils.port);
-
-            System.out.println("Cruiser 에 연결합니다.");
-            System.out.println("Host : " + host);
-            System.out.println("Port : " + port);
-            connectionComponent = new ClientComponent(host, port, new CruiserAgentConnectionCodec(), new AgentCruiserConnectionHandler());
+            MessageHandler handler = new SyncMessageHandler();
+            CruiserAgentConnectionCodec codec = new CruiserAgentConnectionCodec();
+            CruiserAgentConnectionObject connectionObject = new CruiserAgentConnectionObject(this.agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
+            connectionComponent = new ClientComponent(utils.host, Integer.parseInt(utils.port), codec, handler);
             connectionComponent.start();
-            System.out.println("Cruiser에 연결 정보를 전송합니다.");
-            connectionComponent.getChannel().write(connectionObject).channel().flush().await();
-            System.out.println("Cruiser의 응답을 기다립니다.");
+
+            connectionComponent.getNetworkContext().sendObject(connectionObject);
+            connectionComponent.getNetworkContext().waitUntil("received");
+
+            isConnected = (Boolean)connectionComponent.getNetworkContext().getMessageFromQueue();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-*/
+
+    public void start() {
+        watcher.startWatching();
+    }
+
 
     /**
      * WatchingEventListener 에서 감지된 String을 Agent의 Processor로 전달하여 Regular Expression Mathcing 수행
      * Parsing 된 결과를 Sender를 통해 전송한다.
+     * <p/>
+     * TODO: Extract from Agent
      *
      * @param data EventListener에서 감지된 String
      */
@@ -96,11 +106,12 @@ public class HerringAgent {
         Matcher matcher = processor.matchRegex(data);
         MatchIterator matchIterator = matcher.findAll();
         int rowCount = matchIterator.count();
-        //TODO
         //Match Result 를 통해서 Sender에 Matching 된 결과 전송.
         //Sender에서는 Match Result를 이용해 Host에 전송.
         String parsedString = processor.packageMatchingResult(matcher);
 
+        //TODO
+        //rowCount와 parsedString을 package 해서 Cruiser로 전송
     }
 
     private void loadConfiguration() throws ConfigurationException {
