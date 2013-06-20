@@ -15,7 +15,7 @@ public class AgentUtils {
 
 
     public String watcherType;
-    public String watcherTarget;{}
+    public String watcherTarget;
     public String watcherDelay;
     public String processorType;
     public String rowDelimiter;

@@ -15,6 +15,8 @@ import org.herring.agent.watcher.polling.PollingWatcher;
 import org.herring.core.cruiser.model.CruiserAgentConnectionCodec;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
 import org.herring.core.protocol.ClientComponent;
+import org.herring.core.protocol.codec.HerringCodec;
+import org.herring.core.protocol.codec.SerializableCodec;
 import org.herring.core.protocol.handler.MessageHandler;
 import org.herring.core.protocol.handler.SyncMessageHandler;
 
@@ -28,10 +30,6 @@ import java.util.UUID;
  * 3. 통신 성공하면 Agent 실행과 데이터 전송 시작
  * <p/>
  * Singleton 형태이기 때문에, 여러 target을 watching 하기 위해서는 리팩토링 필요.
- * <p/>
- * <p/>
- * <p/>
- * TODO:!!Refactoring!!
  * <p/>
  * User: hyunje
  * Date: 13. 5. 20.
@@ -48,22 +46,24 @@ public class HerringAgent {
     ClientComponent connectionComponent;
     CruiserAgentConnectionObject connectionObject;
 
+    /**
+     * 생성자. 설정 파일 로드
+     */
     private HerringAgent() {
         try {
             agentUUID = UUID.randomUUID().toString();
-
             AgentUtils utils = AgentUtils.getInstance();
             connectionObject = new CruiserAgentConnectionObject(agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
-
             loadConfiguration();
-
-            connectToCruiser();
-
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * 객체 Instance 반환
+     * @return HerringAgent Instance 객체
+     */
     public static HerringAgent getInstance() {
         if (instance == null) {
             instance = new HerringAgent();
@@ -71,11 +71,15 @@ public class HerringAgent {
         return instance;
     }
 
-    private void connectToCruiser() {
+    /**
+     * Cruiser로 연결 요청.
+     * 동기 연결이므로 Cruiser로부터 응답이 올 때까지 기다린다.
+     */
+    public void connectToCruiser() {
         try {
             AgentUtils utils = AgentUtils.getInstance();
             MessageHandler handler = new SyncMessageHandler();
-            CruiserAgentConnectionCodec codec = new CruiserAgentConnectionCodec();
+            HerringCodec codec = new SerializableCodec();
             CruiserAgentConnectionObject connectionObject = new CruiserAgentConnectionObject(this.agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
             connectionComponent = new ClientComponent(utils.host, Integer.parseInt(utils.port), codec, handler);
             connectionComponent.start();
@@ -89,6 +93,9 @@ public class HerringAgent {
         }
     }
 
+    /**
+     * Directory Polling 시작
+     */
     public void start() {
         watcher.startWatching();
     }
@@ -105,13 +112,13 @@ public class HerringAgent {
     public void parse(String data) {
         Matcher matcher = processor.matchRegex(data);
         MatchIterator matchIterator = matcher.findAll();
-        int rowCount = matchIterator.count();
+//        int rowCount = matchIterator.count();
         //Match Result 를 통해서 Sender에 Matching 된 결과 전송.
         //Sender에서는 Match Result를 이용해 Host에 전송.
         String parsedString = processor.packageMatchingResult(matcher);
 
-        //TODO
         //rowCount와 parsedString을 package 해서 Cruiser로 전송
+        connectionComponent.getNetworkContext().sendObject(parsedString);
     }
 
     private void loadConfiguration() throws ConfigurationException {
@@ -127,6 +134,13 @@ public class HerringAgent {
 
     }
 
+    /**
+     * 설정 파일을 읽을 때, Watcher를 설정하는 함수
+     * @param watcherType watcher의 종류
+     * @param watcherTarget polling할 target
+     * @param watcherDelay polling delay
+     * @throws NumberFormatException
+     */
     private void setWatcher(String watcherType, String watcherTarget, String watcherDelay) throws NumberFormatException {
         if ("polling".equals(watcherType)) {
             int delay = Integer.parseInt(watcherDelay);
@@ -137,6 +151,10 @@ public class HerringAgent {
         }
     }
 
+    /**
+     * 설정 파일을 읽을 때, Processor를 설정하는 함수
+     * @param processorType processor의 종
+     */
     private void setProcessor(String processorType) {
 
         if ("IISLogParser".toLowerCase().equals(processorType.toLowerCase())) {

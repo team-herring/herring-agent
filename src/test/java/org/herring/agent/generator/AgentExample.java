@@ -11,6 +11,7 @@ import org.herring.agent.HerringAgent;
 public class AgentExample {
     public static void main(String[] args){
         HerringAgent agent = HerringAgent.getInstance();
+        agent.connectToCruiser();
         agent.start();
     }
 }
