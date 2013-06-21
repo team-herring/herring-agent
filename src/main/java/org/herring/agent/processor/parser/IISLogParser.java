@@ -48,8 +48,8 @@ public class IISLogParser extends AbstractParser {
             return null;
         }
         String trimmed_input = input.trim();
-        System.out.println("-------------------------------------");
-        System.out.println("Input : " + trimmed_input);
+//        System.out.println("-------------------------------------");
+//        System.out.println("Input : " + trimmed_input);
         Pattern pattern = new Pattern(regex);
         return pattern.matcher(trimmed_input);
 /*

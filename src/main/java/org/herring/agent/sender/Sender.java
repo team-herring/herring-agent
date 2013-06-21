@@ -7,5 +7,5 @@ package org.herring.agent.sender;
  * Time: 오전 9:14
  */
 public interface Sender {
-    void send(String content);
+    void sendData(String content);
 }

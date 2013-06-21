@@ -181,7 +181,8 @@ public class HerringAgent {
      * @param contents Processor가 수행한 결과
      */
     public void notifySender(String contents) {
-
+        System.out.println("Agent's Data : "+contents);
+//        this.sender.sendData(contents);
     }
     //---------------------------------------------------------
     //---------------------------------------------------------

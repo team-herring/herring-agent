@@ -10,10 +10,10 @@
             <type>basic</type>
         </processor>
         <parser>
-            <type>ApacheWebAccessLogParser</type>
-            <rowdelimiter>::herring_row::</rowdelimiter>
-            <columndelimiter>::herring_column::</columndelimiter>
-            <datadelimiter>::herring_data::</datadelimiter>
+            <type>IISLogParser</type>
+            <rowdelimiter>::r::</rowdelimiter>
+            <columndelimiter>::c::</columndelimiter>
+            <datadelimiter>::d::</datadelimiter>
         </parser>
         <sender>
             <target>

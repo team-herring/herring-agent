@@ -51,6 +51,35 @@ public abstract class AbstractFileEventHandler implements FileEventHandler {
         return addedLine;
     }
 
+    protected int ReadCountFile(File file) throws IOException{
+        String countFileName = file.getAbsolutePath()+ "." + agentConfiguration.readCountSuffix;
+        File cFile = new File(countFileName);
+        if(!cFile.exists()){
+            return 0;
+        }
+        RandomAccessFile countFile = new RandomAccessFile(cFile,"r");
+        FileChannel countFileChannel = countFile.getChannel();
+        ByteBuffer countFileBuffer = ByteBuffer.allocate(agentConfiguration.BufferSize);
+        countFileBuffer.clear();
+        countFileChannel.position(0);
+        int byteRead = countFileChannel.read(countFileBuffer);
+        String countLine = "";
+        while (byteRead != -1){
+            countFileBuffer.flip();
+            while (countFileBuffer.hasRemaining()) {
+                char currentChar = (char) countFileBuffer.get();
+                countLine += currentChar;
+            }
+            countFileBuffer.clear();
+            byteRead = countFileChannel.read(countFileBuffer);
+        }
+
+        countFile.close();
+        countFileChannel.close();
+        countFileBuffer.clear();
+        return Integer.parseInt(countLine);
+    }
+
     protected void CreateCountLineFile(File file, int countLine) throws IOException {
         RandomAccessFile countFile = new RandomAccessFile(file.getAbsolutePath() + "." + agentConfiguration.readCountSuffix, "rw");
         countFile.setLength(0);

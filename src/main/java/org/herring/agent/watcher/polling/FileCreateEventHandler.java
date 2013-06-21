@@ -12,7 +12,7 @@ import java.io.IOException;
  * Date: 13. 6. 15.
  * Time: 오후 10:56
  */
-public class FileCreateEventHandler extends AbstractFileEventHandler{
+public class FileCreateEventHandler extends AbstractFileEventHandler {
     @Override
     public void eventHandle(File catchedFile) {
         if (!agentConfiguration.isReadableFile(catchedFile)) return;
@@ -26,13 +26,12 @@ public class FileCreateEventHandler extends AbstractFileEventHandler{
 //            Parse read line
 //            parser.matchRegex(readLine);
 
+            //Create a counted line number file
+            CreateCountLineFile(catchedFile, readLine.length());
+
             //Pass read lines to Processor
             HerringAgent agent = HerringAgent.getInstance();
             agent.notifyProcessor(readLine);
-
-
-            //Create a counted line number file
-            CreateCountLineFile(catchedFile, readLine.length());
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
