@@ -7,6 +7,9 @@ import jregex.Matcher;
 import jregex.Pattern;
 import org.herring.agent.util.AgentConfiguration;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 /**
  * IIS Log 파싱을 위한 Parser
  * User: hyunje
@@ -48,21 +51,8 @@ public class IISLogParser extends AbstractParser {
             return null;
         }
         String trimmed_input = input.trim();
-//        System.out.println("-------------------------------------");
-//        System.out.println("Input : " + trimmed_input);
         Pattern pattern = new Pattern(regex);
         return pattern.matcher(trimmed_input);
-/*
-        while (matchIterator.hasMore()){
-            MatchResult matchResult = matchIterator.nextMatch();
-            int gc = matchResult.groupCount();
-            System.out.println("Match Regex!!");
-
-            for(COLUMN_NAME column_name : COLUMN_NAME.values()){
-                System.out.println("Group '"+column_name+"' : "+matchResult.group(column_name.toString()));
-            }
-        }
-*/
     }
 
     @Override
@@ -77,11 +67,28 @@ public class IISLogParser extends AbstractParser {
         StringBuilder builder = new StringBuilder();
         while (matchIterator.hasMore()){
             MatchResult matchResult = matchIterator.nextMatch();
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+            int year = 0, month = 0, day =0 , hour =0 , minute =0 , second =0 ;
+
             for(COLUMN_NAME column_name : COLUMN_NAME.values()){
-                builder.append(column_name).append(dataDelim).append(matchResult.group(column_name.toString())).append(columnDelim);
+                String col_name = column_name.toString();
+                String col_data = matchResult.group(col_name);
+                if("date".equals(col_name)){
+                    String[] strings = col_data.split("-");
+                    year = Integer.parseInt(strings[0]);
+                    month = Integer.parseInt(strings[1]);
+                    day = Integer.parseInt(strings[2]);
+                }
+                if("time".equals(col_name)){
+                    String[] strings = col_data.split(":");
+                    hour = Integer.parseInt(strings[0]);
+                    minute = Integer.parseInt(strings[1]);
+                    second = Integer.parseInt(strings[2]);
+                }
+                builder.append(col_name).append(dataDelim).append(col_data).append(columnDelim);
             }
-            builder.substring(0,builder.toString().length()-columnDelim.length());
-            builder.append(rowDelim);
+            calendar.set(year,month,day,hour,minute,second);
+            builder.append("herring_timestamp").append(dataDelim).append(calendar.getTimeInMillis()).append(columnDelim).append(rowDelim);
         }
         return builder.toString();
     }

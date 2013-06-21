@@ -11,7 +11,8 @@ import org.herring.agent.util.AgentConfiguration;
  * User: hyunje
  * Date: 13. 5. 14.
  * Time: 오전 10:43
- * To change this template use File | Settings | File Templates.
+ *
+ * TODO: Append Herring_timestamp
  */
 public class ApacheWebAccessLogParser extends AbstractParser {
     private static ApacheWebAccessLogParser instance = null;
