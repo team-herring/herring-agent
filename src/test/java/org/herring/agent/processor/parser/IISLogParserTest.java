@@ -8,6 +8,7 @@ import org.junit.Test;
  * Date: 13. 6. 4.
  * Time: 오전 3:43
  */
+@Deprecated
 public class IISLogParserTest {
     @Test
     public void testGetInstance() throws Exception {

@@ -34,11 +34,9 @@ import java.util.UUID;
 public class HerringAgent {
 
     private String agentUUID;
-
     private Watcher watcher;
     private Processor processor;
     private Sender sender;
-
     private ClientComponent connectionComponent;
     private CruiserAgentConnectionObject connectionObject;
     private boolean isConnected;
@@ -103,6 +101,7 @@ public class HerringAgent {
 
     //-------------------------------------------------------
     //----------------Watcher 와 관련된 Methods----------------
+
     /**
      * 설정 파일로부터 Watcher를 설정
      */
@@ -116,10 +115,20 @@ public class HerringAgent {
 
     }
 
+    /**
+     * 사용자의 직접 지정을 통한 Watcher 설정
+     *
+     * @param watcher 설정파일이 아닌 직접 설정한 Watcher
+     */
     public void attachWatcher(Watcher watcher) {
         this.watcher = watcher;
     }
 
+    /**
+     * Watcher의 수행 결과 -> ex)파일의 변경된 부분을 Processor 에 전달
+     *
+     * @param contents Watcher의 수행 결과
+     */
     public void notifyProcessor(String contents) {
         this.processor.processing(contents);
     }
@@ -127,33 +136,51 @@ public class HerringAgent {
     //-------------------------------------------------------
 
 
-
     //---------------------------------------------------------
     //----------------Processor 와 관련된 Methods----------------
+
     /**
      * 설정 파일로부터 Processor를 설정
      */
     public void attachProcessor() {
         this.processor = ProcessorAttacher.attachProcessor(this.agentConfiguration);
     }
-    public void attachProcessor(Processor processor){
+
+    /**
+     * 사용자 직접 지정을 통한 Processor 설정
+     *
+     * @param processor 사용자가 직접 지정한 Processor
+     */
+    public void attachProcessor(Processor processor) {
         this.processor = processor;
     }
 
-    public void attachParser(){
+    /**
+     * 설정파일에 정의된 Parser 설정
+     */
+    public void attachParser() {
         this.processor.setParser(ParserAttacher.attachParser(this.agentConfiguration));
     }
 
-    public void attachParser(Parser parser){
+    /**
+     * 사용자가 정의한 Parser 설정
+     *
+     * @param parser 사용자가 정의한 Parser
+     */
+    public void attachParser(Parser parser) {
         this.processor.setParser(parser);
     }
 
-    public void notifySender(String contents){
+    /**
+     * Processor가 수행한 결과 -> ex)파싱된 결과를 Sender로 전송
+     *
+     * @param contents Processor가 수행한 결과
+     */
+    public void notifySender(String contents) {
 
     }
     //---------------------------------------------------------
     //---------------------------------------------------------
-
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
