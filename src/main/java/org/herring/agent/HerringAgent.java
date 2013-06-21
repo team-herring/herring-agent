@@ -159,6 +159,10 @@ public class HerringAgent {
      * 설정파일에 정의된 Parser 설정
      */
     public void attachParser() {
+        if(processor == null){
+            System.out.println("Processor is Null!");
+            return;
+        }
         this.processor.setParser(ParserAttacher.attachParser(this.agentConfiguration));
     }
 

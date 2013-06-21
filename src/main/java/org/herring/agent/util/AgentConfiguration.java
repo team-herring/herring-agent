@@ -39,7 +39,7 @@ public class AgentConfiguration {
             watcherTarget = configuration.getString("configuration.watcher.target", "./");
             watcherDelay = configuration.getString("configuration.watcher.delay", "500");
 
-            parserType = configuration.getString("configuration.processor.tyep","basic");
+            processorType = configuration.getString("configuration.processor.tyep","basic");
 
             parserType = configuration.getString("configuration.parser.type", "nullparser");
 

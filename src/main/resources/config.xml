@@ -10,7 +10,7 @@
             <type>basic</type>
         </processor>
         <parser>
-            <type>iislogparser</type>
+            <type>ApacheWebAccessLogParser</type>
             <rowdelimiter>::herring_row::</rowdelimiter>
             <columndelimiter>::herring_column::</columndelimiter>
             <datadelimiter>::herring_data::</datadelimiter>

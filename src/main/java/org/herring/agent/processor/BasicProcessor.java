@@ -13,6 +13,7 @@ public class BasicProcessor extends AbstractProcessor {
     public void processing(String data) {
         HerringAgent agent = HerringAgent.getInstance();
         String parsedString = this.parser.parse(data);
+        System.out.println("Parsed String : "+parsedString);
         agent.notifySender(parsedString);
     }
 }
