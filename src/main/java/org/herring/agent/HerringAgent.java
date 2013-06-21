@@ -12,7 +12,6 @@ import org.herring.agent.sender.Sender;
 import org.herring.agent.util.AgentUtils;
 import org.herring.agent.watcher.Watcher;
 import org.herring.agent.watcher.polling.PollingWatcher;
-import org.herring.core.cruiser.model.CruiserAgentConnectionCodec;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
 import org.herring.core.protocol.ClientComponent;
 import org.herring.core.protocol.codec.HerringCodec;
@@ -37,38 +36,30 @@ import java.util.UUID;
  */
 public class HerringAgent {
 
-    private static HerringAgent instance = null;
-    private boolean isConnected = false;
-    String agentUUID;
-    Watcher watcher;
-    Processor processor;
-    Sender sender;
-    ClientComponent connectionComponent;
-    CruiserAgentConnectionObject connectionObject;
+    private String agentUUID;
+    private Watcher watcher;
+    private Processor processor;
+    private Sender sender;
+    private ClientComponent connectionComponent;
+    private CruiserAgentConnectionObject connectionObject;
+    private boolean isConnected;
 
     /**
      * 생성자. 설정 파일 로드
      */
     private HerringAgent() {
-        try {
             agentUUID = UUID.randomUUID().toString();
             AgentUtils utils = AgentUtils.getInstance();
             connectionObject = new CruiserAgentConnectionObject(agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
-            loadConfiguration();
-        } catch (ConfigurationException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
      * 객체 Instance 반환
+     *
      * @return HerringAgent Instance 객체
      */
     public static HerringAgent getInstance() {
-        if (instance == null) {
-            instance = new HerringAgent();
-        }
-        return instance;
+        return HerringAgentHolder.INSATNCE;
     }
 
     /**
@@ -87,7 +78,7 @@ public class HerringAgent {
             connectionComponent.getNetworkContext().sendObject(connectionObject);
             connectionComponent.getNetworkContext().waitUntil("received");
 
-            isConnected = (Boolean)connectionComponent.getNetworkContext().getMessageFromQueue();
+            isConnected = (Boolean) connectionComponent.getNetworkContext().getMessageFromQueue();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,7 +90,6 @@ public class HerringAgent {
     public void start() {
         watcher.startWatching();
     }
-
 
     /**
      * WatchingEventListener 에서 감지된 String을 Agent의 Processor로 전달하여 Regular Expression Mathcing 수행
@@ -121,9 +111,13 @@ public class HerringAgent {
         connectionComponent.getNetworkContext().sendObject(parsedString);
     }
 
-    private void loadConfiguration() throws ConfigurationException {
+    /**
+     * Configuration
+     *
+     * @throws ConfigurationException
+     */
+    public void loadConfiguration() throws ConfigurationException {
         AgentUtils utils = AgentUtils.getInstance();
-
         setWatcher(utils.watcherType, utils.watcherTarget, utils.watcherDelay);
         setProcessor(utils.processorType);
         setSender();
@@ -131,14 +125,14 @@ public class HerringAgent {
 
     private void setSender() {
         this.sender = BasicSender.getInstance();
-
     }
 
     /**
      * 설정 파일을 읽을 때, Watcher를 설정하는 함수
-     * @param watcherType watcher의 종류
+     *
+     * @param watcherType   watcher의 종류
      * @param watcherTarget polling할 target
-     * @param watcherDelay polling delay
+     * @param watcherDelay  polling delay
      * @throws NumberFormatException
      */
     private void setWatcher(String watcherType, String watcherTarget, String watcherDelay) throws NumberFormatException {
@@ -153,6 +147,7 @@ public class HerringAgent {
 
     /**
      * 설정 파일을 읽을 때, Processor를 설정하는 함수
+     *
      * @param processorType processor의 종
      */
     private void setProcessor(String processorType) {
@@ -177,5 +172,21 @@ public class HerringAgent {
 //        builder.append("==Watcher==\n").append(watcher.toString());
         builder.append("Processor Type : ").append(processor.getProcessorType()).append("\n");
         return builder.toString();
+    }
+
+    public CruiserAgentConnectionObject getConnectionObject() {
+        return connectionObject;
+    }
+
+    public Sender getSender() {
+        return sender;
+    }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    private static final class HerringAgentHolder {
+        private static final HerringAgent INSATNCE = new HerringAgent();
     }
 }

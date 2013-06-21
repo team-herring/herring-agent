@@ -1,5 +1,6 @@
 package org.herring.agent.generator;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.herring.agent.HerringAgent;
 
 /**
@@ -9,8 +10,9 @@ import org.herring.agent.HerringAgent;
  * Time: 오전 11:19
  */
 public class AgentExample {
-    public static void main(String[] args){
+    public static void main(String[] args) throws ConfigurationException {
         HerringAgent agent = HerringAgent.getInstance();
+        agent.loadConfiguration();
         agent.connectToCruiser();
         agent.start();
     }
