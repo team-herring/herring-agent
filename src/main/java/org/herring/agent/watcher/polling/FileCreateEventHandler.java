@@ -15,7 +15,7 @@ import java.io.IOException;
 public class FileCreateEventHandler extends AbstractFileEventHandler{
     @Override
     public void eventHandle(File catchedFile) {
-        if (!utils.isReadableFile(catchedFile)) return;
+        if (!agentConfiguration.isReadableFile(catchedFile)) return;
 
         System.out.println("File was created : " + catchedFile.getName());
         System.out.println("Read file : ");

@@ -75,10 +75,10 @@ public class IISLogParser extends AbstractParser {
     public String packageMatchingResult(Matcher matcher) {
         MatchIterator matchIterator = matcher.findAll();
 
-        AgentConfiguration utils = AgentConfiguration.getInstance();
-        String rowDelim = utils.rowDelimiter;
-        String columnDelim = utils.columnDelimiter;
-        String dataDelim = utils.dataDelimiter;
+        AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
+        String rowDelim = agentConfiguration.rowDelimiter;
+        String columnDelim = agentConfiguration.columnDelimiter;
+        String dataDelim = agentConfiguration.dataDelimiter;
 
         StringBuilder builder = new StringBuilder();
         while (matchIterator.hasMore()){

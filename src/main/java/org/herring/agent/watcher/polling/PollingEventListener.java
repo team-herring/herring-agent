@@ -13,10 +13,10 @@ import java.io.File;
  * Time: 오후 10:08
  */
 public class PollingEventListener implements FileAlterationListener {
-    AgentConfiguration utils;
+    AgentConfiguration agentConfiguration;
 
     public PollingEventListener(){
-        utils = AgentConfiguration.getInstance();
+        agentConfiguration = AgentConfiguration.getInstance();
     }
 
 

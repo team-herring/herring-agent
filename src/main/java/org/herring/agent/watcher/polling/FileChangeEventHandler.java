@@ -15,10 +15,10 @@ import java.io.IOException;
 public class FileChangeEventHandler extends AbstractFileEventHandler {
     @Override
     public void eventHandle(File catchedFile) {
-        if (!utils.isReadableFile(catchedFile)) return;
+        if (!agentConfiguration.isReadableFile(catchedFile)) return;
         System.out.println("File was changed : " + catchedFile.getName());
         try {
-            File countFile = new File(catchedFile.getAbsolutePath() + "." + utils.readCountSuffix);
+            File countFile = new File(catchedFile.getAbsolutePath() + "." + agentConfiguration.readCountSuffix);
             if (!countFile.exists()) {
                 System.out.println("Count file does not exist.");
                 return;

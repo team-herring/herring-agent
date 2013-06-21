@@ -15,10 +15,10 @@ import java.nio.channels.FileChannel;
  * Time: 오후 11:19
  */
 public abstract class AbstractFileEventHandler implements FileEventHandler {
-    protected AgentConfiguration utils;
+    protected AgentConfiguration agentConfiguration;
 
     public AbstractFileEventHandler() {
-        utils = AgentConfiguration.getInstance();
+        agentConfiguration = AgentConfiguration.getInstance();
     }
 
     public abstract void eventHandle(File catchedFile);
@@ -26,7 +26,7 @@ public abstract class AbstractFileEventHandler implements FileEventHandler {
     protected String ReadContentsFromFile(File file, int position) throws IOException {
         RandomAccessFile addedFile = new RandomAccessFile(file.getAbsolutePath(), "r");
         FileChannel addedFileChannel = addedFile.getChannel();
-        ByteBuffer addedFileBuffer = ByteBuffer.allocate(utils.BufferSize);
+        ByteBuffer addedFileBuffer = ByteBuffer.allocate(agentConfiguration.BufferSize);
         addedFileBuffer.clear();
         addedFileChannel.position(position);
         int byteRead = addedFileChannel.read(addedFileBuffer);
@@ -52,10 +52,10 @@ public abstract class AbstractFileEventHandler implements FileEventHandler {
     }
 
     protected void CreateCountLineFile(File file, int countLine) throws IOException {
-        RandomAccessFile countFile = new RandomAccessFile(file.getAbsolutePath() + "." + utils.readCountSuffix, "rw");
+        RandomAccessFile countFile = new RandomAccessFile(file.getAbsolutePath() + "." + agentConfiguration.readCountSuffix, "rw");
         countFile.setLength(0);
         FileChannel countFileChannel = countFile.getChannel();
-        ByteBuffer buffer = ByteBuffer.allocate(utils.BufferSize);
+        ByteBuffer buffer = ByteBuffer.allocate(agentConfiguration.BufferSize);
 
         System.out.println("New Count : " + countLine);
 

@@ -49,8 +49,8 @@ public class HerringAgent {
      */
     private HerringAgent() {
             agentUUID = UUID.randomUUID().toString();
-            AgentConfiguration utils = AgentConfiguration.getInstance();
-            connectionObject = new CruiserAgentConnectionObject(agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
+            AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
+            connectionObject = new CruiserAgentConnectionObject(agentUUID, true, agentConfiguration.rowDelimiter, agentConfiguration.columnDelimiter, agentConfiguration.dataDelimiter);
     }
 
     /**
@@ -68,11 +68,11 @@ public class HerringAgent {
      */
     public void connectToCruiser() {
         try {
-            AgentConfiguration utils = AgentConfiguration.getInstance();
+            AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
             MessageHandler handler = new SyncMessageHandler();
             HerringCodec codec = new SerializableCodec();
-            CruiserAgentConnectionObject connectionObject = new CruiserAgentConnectionObject(this.agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
-            connectionComponent = new ClientComponent(utils.host, Integer.parseInt(utils.port), codec, handler);
+            CruiserAgentConnectionObject connectionObject = new CruiserAgentConnectionObject(this.agentUUID, true, agentConfiguration.rowDelimiter, agentConfiguration.columnDelimiter, agentConfiguration.dataDelimiter);
+            connectionComponent = new ClientComponent(agentConfiguration.host, Integer.parseInt(agentConfiguration.port), codec, handler);
             connectionComponent.start();
 
             connectionComponent.getNetworkContext().sendObject(connectionObject);
@@ -117,9 +117,9 @@ public class HerringAgent {
      * @throws ConfigurationException
      */
     public void loadConfiguration() throws ConfigurationException {
-        AgentConfiguration utils = AgentConfiguration.getInstance();
-        setWatcher(utils.watcherType, utils.watcherTarget, utils.watcherDelay);
-        setProcessor(utils.processorType);
+        AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
+        setWatcher(agentConfiguration.watcherType, agentConfiguration.watcherTarget, agentConfiguration.watcherDelay);
+        setProcessor(agentConfiguration.processorType);
         setSender();
     }
 
