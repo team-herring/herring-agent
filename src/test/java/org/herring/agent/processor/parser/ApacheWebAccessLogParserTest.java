@@ -64,10 +64,10 @@ public class ApacheWebAccessLogParserTest {
         ApacheWebAccessLogParser parser = ApacheWebAccessLogParser.getInstance();
         String sampleLog = generator.getSampleLog(30);
         matcher = parser.matchRegex(sampleLog);
-        String convertedString = parser.packageMatchingResult(matcher);
+//        String convertedString = parser.packageMatchingResult(matcher);
         System.out.println("Converted String");
         System.out.println("===================");
-        System.out.println(convertedString);
+//        System.out.println(convertedString);
         System.out.println("===================");
     }
 }

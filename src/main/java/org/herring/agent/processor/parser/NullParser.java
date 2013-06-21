@@ -2,6 +2,9 @@ package org.herring.agent.processor.parser;
 
 import jregex.Matcher;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 아무 Parsing도 하지 않고 그대로 읽은 데이터를 전송하는 parser.
  * <p/>
@@ -28,8 +31,8 @@ public class NullParser extends AbstractParser {
     }
 
     @Override
-    public String packageMatchingResult(Matcher matcher) {
-        return "";
+    public List<Map<String,String>> packageMatchingResult(Matcher matcher) {
+        return null;
     }
 
 }

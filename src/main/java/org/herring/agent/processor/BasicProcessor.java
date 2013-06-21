@@ -2,6 +2,9 @@ package org.herring.agent.processor;
 
 import org.herring.agent.HerringAgent;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * << Description >>
  * User: hyunje
@@ -12,7 +15,7 @@ public class BasicProcessor extends AbstractProcessor {
     @Override
     public void processing(String data) {
         HerringAgent agent = HerringAgent.getInstance();
-        String parsedString = this.parser.parse(data);
+        List<Map<String,String>> parsedString = this.parser.parse(data);
         System.out.println("Parsed String : "+parsedString);
         agent.notifySender(parsedString);
     }

@@ -17,6 +17,8 @@ public class AgentExample {
         agent.attachWatcher();
         agent.attachProcessor();
         agent.attachParser();
+        agent.attachSender();
+        agent.prepareConnection();
 
 //        agent.connectToCruiser();
         agent.startWatching();

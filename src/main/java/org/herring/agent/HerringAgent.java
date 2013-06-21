@@ -4,10 +4,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.herring.agent.processor.Processor;
 import org.herring.agent.processor.parser.Parser;
 import org.herring.agent.sender.Sender;
-import org.herring.agent.util.AgentConfiguration;
-import org.herring.agent.util.ParserAttacher;
-import org.herring.agent.util.ProcessorAttacher;
-import org.herring.agent.util.WatcherAttatcher;
+import org.herring.agent.util.*;
 import org.herring.agent.watcher.Watcher;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
 import org.herring.core.protocol.ClientComponent;
@@ -16,6 +13,8 @@ import org.herring.core.protocol.codec.SerializableCodec;
 import org.herring.core.protocol.handler.MessageHandler;
 import org.herring.core.protocol.handler.SyncMessageHandler;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -180,12 +179,28 @@ public class HerringAgent {
      *
      * @param contents Processor가 수행한 결과
      */
-    public void notifySender(String contents) {
-        System.out.println("Agent's Data : "+contents);
-//        this.sender.sendData(contents);
+    public void notifySender(List<Map<String,String>> contents) {
+//        System.out.println("Agent's Data : "+contents);
+        this.sender.sendData(contents);
     }
     //---------------------------------------------------------
     //---------------------------------------------------------
+
+
+    //--------------------------------------------------------
+    //-----------------Sender 와 관련된 Methods-----------------
+    public void prepareConnection(){
+        this.sender.prepareConnection();
+    }
+
+    public void attachSender(){
+        this.sender = SenderAttacher.attach(agentConfiguration);
+    }
+
+
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+
 
     public String toString() {
         StringBuilder builder = new StringBuilder();

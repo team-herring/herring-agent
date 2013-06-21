@@ -1,9 +1,7 @@
 package org.herring.agent.sender;
 
-import org.apache.commons.configuration.XMLConfiguration;
-import org.herring.core.protocol.ClientComponent;
-import org.herring.core.protocol.codec.HerringCodec;
-import org.herring.core.protocol.handler.MessageHandler;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 가장 기본적인 Sender.
@@ -15,7 +13,10 @@ import org.herring.core.protocol.handler.MessageHandler;
 public final class BasicSender extends AbstractSender {
 
     @Override
-    public void sendData(String content) {
-
+    public void sendData(List<Map<String, String>> content) {
+        if(!connectionComponent.isActive()){
+            System.out.println("Connection is inactive");
+        }
+        connectionComponent.getNetworkContext().sendObject(content);
     }
 }
