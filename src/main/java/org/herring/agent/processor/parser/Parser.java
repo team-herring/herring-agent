@@ -1,5 +1,8 @@
 package org.herring.agent.processor.parser;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * << Description >>
  * User: hyunje
@@ -7,5 +10,5 @@ package org.herring.agent.processor.parser;
  * Time: 오전 2:40
  */
 public interface Parser {
-    String parse(String data);
+    List<Map<String,String>> parse(String data);
 }

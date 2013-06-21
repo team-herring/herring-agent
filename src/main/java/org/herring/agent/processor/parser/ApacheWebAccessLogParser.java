@@ -6,6 +6,8 @@ import jregex.Matcher;
 import jregex.Pattern;
 import org.herring.agent.util.AgentConfiguration;
 
+import java.util.*;
+
 /**
  * Apache Web Access Log 파서
  * User: hyunje
@@ -54,23 +56,32 @@ public class ApacheWebAccessLogParser extends AbstractParser {
     }
 
     @Override
-    public String packageMatchingResult(Matcher matcher) {
+    public List<Map<String,String>> packageMatchingResult(Matcher matcher) {
         MatchIterator matchIterator = matcher.findAll();
-        AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
-        String rowDelim = agentConfiguration.rowDelimiter;
-        String columnDelim = agentConfiguration.columnDelimiter;
-        String dataDelim = agentConfiguration.dataDelimiter;
 
-        StringBuilder builder = new StringBuilder();
+        List<Map<String,String>> resultMapList = new ArrayList<Map<String, String>>();
+
         while (matchIterator.hasMore()){
             MatchResult matchResult = matchIterator.nextMatch();
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+
+            Map<String,String> aLogResult = new HashMap<String, String>();
+
             for(COLUMN_NAME column_name : COLUMN_NAME.values()){
-                builder.append(column_name).append(dataDelim).append(matchResult.group(column_name.toString())).append(columnDelim);
+                String col_name = column_name.toString();
+                String col_data = matchResult.group(col_name);
+                aLogResult.put(col_name,col_data);
             }
-            builder.substring(0,builder.toString().length()-columnDelim.length());
-            builder.append(rowDelim);
+            calendar.set(Integer.parseInt(matchResult.group(COLUMN_NAME.year.toString())),
+                    Integer.parseInt(matchResult.group(COLUMN_NAME.month.toString())),
+                    Integer.parseInt(matchResult.group(COLUMN_NAME.day.toString())),
+                    Integer.parseInt(matchResult.group(COLUMN_NAME.hour.toString())),
+                    Integer.parseInt(matchResult.group(COLUMN_NAME.minute.toString())),
+                    Integer.parseInt(matchResult.group(COLUMN_NAME.second.toString())));
+            aLogResult.put("herring_timestamp", String.valueOf(calendar.getTimeInMillis()));
+            resultMapList.add(aLogResult);
         }
-        return builder.toString();
+        return resultMapList;
     }
 
     enum COLUMN_NAME {

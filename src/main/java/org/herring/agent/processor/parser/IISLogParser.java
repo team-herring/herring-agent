@@ -7,8 +7,7 @@ import jregex.Matcher;
 import jregex.Pattern;
 import org.herring.agent.util.AgentConfiguration;
 
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * IIS Log 파싱을 위한 Parser
@@ -56,19 +55,17 @@ public class IISLogParser extends AbstractParser {
     }
 
     @Override
-    protected String packageMatchingResult(Matcher matcher) {
+    protected List<Map<String,String>> packageMatchingResult(Matcher matcher) {
         MatchIterator matchIterator = matcher.findAll();
 
-        AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
-        String rowDelim = agentConfiguration.rowDelimiter;
-        String columnDelim = agentConfiguration.columnDelimiter;
-        String dataDelim = agentConfiguration.dataDelimiter;
+        List<Map<String,String>> resultMapList = new ArrayList<Map<String, String>>();
 
-        StringBuilder builder = new StringBuilder();
         while (matchIterator.hasMore()){
             MatchResult matchResult = matchIterator.nextMatch();
             Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
             int year = 0, month = 0, day =0 , hour =0 , minute =0 , second =0 ;
+
+            Map<String,String> aLogResult = new HashMap<String, String>();
 
             for(COLUMN_NAME column_name : COLUMN_NAME.values()){
                 String col_name = column_name.toString();
@@ -85,12 +82,13 @@ public class IISLogParser extends AbstractParser {
                     minute = Integer.parseInt(strings[1]);
                     second = Integer.parseInt(strings[2]);
                 }
-                builder.append(col_name).append(dataDelim).append(col_data).append(columnDelim);
+                aLogResult.put(col_name,col_data);
             }
-            calendar.set(year,month,day,hour,minute,second);
-            builder.append("herring_timestamp").append(dataDelim).append(calendar.getTimeInMillis()).append(columnDelim).append(rowDelim);
+            calendar.set(year, month, day, hour, minute, second);
+            aLogResult.put("herring_timestamp",String.valueOf(calendar.getTimeInMillis()));
+            resultMapList.add(aLogResult);
         }
-        return builder.toString();
+        return resultMapList;
     }
 
     enum COLUMN_NAME {

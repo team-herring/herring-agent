@@ -2,6 +2,9 @@ package org.herring.agent.processor.parser;
 
 import jregex.Matcher;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Parser 추상화 객체
  * User: hyunje
@@ -13,9 +16,9 @@ public abstract class AbstractParser implements Parser {
 
     abstract Matcher matchRegex(String input);
 
-    abstract String packageMatchingResult(Matcher matcher);
+    abstract List<Map<String,String>> packageMatchingResult(Matcher matcher);
 
-    public String parse(String contents) {
+    public List<Map<String,String>> parse(String contents) {
         Matcher matcher = this.matchRegex(contents);
 //        MatchIterator matchIterator = matcher.findAll();
 //        int rowCount = matchIterator.count();
