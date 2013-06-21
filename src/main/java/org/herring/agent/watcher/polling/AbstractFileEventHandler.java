@@ -1,6 +1,6 @@
 package org.herring.agent.watcher.polling;
 
-import org.herring.agent.util.AgentUtils;
+import org.herring.agent.util.AgentConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +15,10 @@ import java.nio.channels.FileChannel;
  * Time: 오후 11:19
  */
 public abstract class AbstractFileEventHandler implements FileEventHandler {
-    protected AgentUtils utils;
+    protected AgentConfiguration utils;
 
     public AbstractFileEventHandler() {
-        utils = AgentUtils.getInstance();
+        utils = AgentConfiguration.getInstance();
     }
 
     public abstract void eventHandle(File catchedFile);

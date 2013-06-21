@@ -2,16 +2,9 @@ package org.herring.agent.watcher.polling;
 
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationObserver;
-import org.herring.agent.HerringAgent;
-import org.herring.agent.util.AgentUtils;
-import org.herring.agent.processor.Processor;
+import org.herring.agent.util.AgentConfiguration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 
 /**
  * Event Listener for PollingWatcher
@@ -20,10 +13,10 @@ import java.nio.channels.FileChannel;
  * Time: 오후 10:08
  */
 public class PollingEventListener implements FileAlterationListener {
-    AgentUtils utils;
+    AgentConfiguration utils;
 
     public PollingEventListener(){
-        utils = AgentUtils.getInstance();
+        utils = AgentConfiguration.getInstance();
     }
 
 

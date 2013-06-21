@@ -11,7 +11,7 @@ import java.io.File;
  * Date: 13. 4. 28.
  * Time: 오후 6:06
  */
-public class AgentUtils {
+public class AgentConfiguration {
 
 
     public String watcherType;
@@ -26,7 +26,7 @@ public class AgentUtils {
     public String host;
     public String port;
 
-    private AgentUtils() {
+    private AgentConfiguration() {
         try {
             XMLConfiguration configuration = new XMLConfiguration("config.xml");
 
@@ -49,7 +49,7 @@ public class AgentUtils {
 
     }
 
-    public static AgentUtils getInstance() {
+    public static AgentConfiguration getInstance() {
         return AgentUtilsHolder.INSTANCE;
     }
 
@@ -60,6 +60,6 @@ public class AgentUtils {
     }
 
     private static final class AgentUtilsHolder {
-        private static final AgentUtils INSTANCE = new AgentUtils();
+        private static final AgentConfiguration INSTANCE = new AgentConfiguration();
     }
 }

@@ -9,7 +9,7 @@ import org.herring.agent.processor.parser.IISLogParser;
 import org.herring.agent.processor.parser.NullParser;
 import org.herring.agent.sender.BasicSender;
 import org.herring.agent.sender.Sender;
-import org.herring.agent.util.AgentUtils;
+import org.herring.agent.util.AgentConfiguration;
 import org.herring.agent.watcher.Watcher;
 import org.herring.agent.watcher.polling.PollingWatcher;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
@@ -49,7 +49,7 @@ public class HerringAgent {
      */
     private HerringAgent() {
             agentUUID = UUID.randomUUID().toString();
-            AgentUtils utils = AgentUtils.getInstance();
+            AgentConfiguration utils = AgentConfiguration.getInstance();
             connectionObject = new CruiserAgentConnectionObject(agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
     }
 
@@ -68,7 +68,7 @@ public class HerringAgent {
      */
     public void connectToCruiser() {
         try {
-            AgentUtils utils = AgentUtils.getInstance();
+            AgentConfiguration utils = AgentConfiguration.getInstance();
             MessageHandler handler = new SyncMessageHandler();
             HerringCodec codec = new SerializableCodec();
             CruiserAgentConnectionObject connectionObject = new CruiserAgentConnectionObject(this.agentUUID, true, utils.rowDelimiter, utils.columnDelimiter, utils.dataDelimiter);
@@ -117,7 +117,7 @@ public class HerringAgent {
      * @throws ConfigurationException
      */
     public void loadConfiguration() throws ConfigurationException {
-        AgentUtils utils = AgentUtils.getInstance();
+        AgentConfiguration utils = AgentConfiguration.getInstance();
         setWatcher(utils.watcherType, utils.watcherTarget, utils.watcherDelay);
         setProcessor(utils.processorType);
         setSender();

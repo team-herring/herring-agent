@@ -5,7 +5,7 @@ import jregex.MatchIterator;
 import jregex.MatchResult;
 import jregex.Matcher;
 import jregex.Pattern;
-import org.herring.agent.util.AgentUtils;
+import org.herring.agent.util.AgentConfiguration;
 
 /**
  * IIS Log 파싱을 위한 Parser
@@ -75,7 +75,7 @@ public class IISLogParser extends AbstractParser {
     public String packageMatchingResult(Matcher matcher) {
         MatchIterator matchIterator = matcher.findAll();
 
-        AgentUtils utils = AgentUtils.getInstance();
+        AgentConfiguration utils = AgentConfiguration.getInstance();
         String rowDelim = utils.rowDelimiter;
         String columnDelim = utils.columnDelimiter;
         String dataDelim = utils.dataDelimiter;

@@ -4,7 +4,7 @@ import jregex.MatchIterator;
 import jregex.MatchResult;
 import jregex.Matcher;
 import jregex.Pattern;
-import org.herring.agent.util.AgentUtils;
+import org.herring.agent.util.AgentConfiguration;
 
 /**
  * Apache Web Access Log 파서
@@ -61,7 +61,7 @@ public class ApacheWebAccessLogParser extends AbstractParser {
     @Override
     public String packageMatchingResult(Matcher matcher) {
         MatchIterator matchIterator = matcher.findAll();
-        AgentUtils utils = AgentUtils.getInstance();
+        AgentConfiguration utils = AgentConfiguration.getInstance();
         String rowDelim = utils.rowDelimiter;
         String columnDelim = utils.columnDelimiter;
         String dataDelim = utils.dataDelimiter;
