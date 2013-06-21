@@ -42,7 +42,7 @@ public class IISLogParser extends AbstractParser {
     }
 
     @Override
-    public Matcher matchRegex(String input) {
+    protected Matcher matchRegex(String input) {
         if (regex.length() == 0) {
             System.out.println("Length of regex cannot be 0!");
             return null;
@@ -51,8 +51,7 @@ public class IISLogParser extends AbstractParser {
         System.out.println("-------------------------------------");
         System.out.println("Input : " + trimmed_input);
         Pattern pattern = new Pattern(regex);
-        Matcher matcher = pattern.matcher(trimmed_input);
-        return matcher;
+        return pattern.matcher(trimmed_input);
 /*
         while (matchIterator.hasMore()){
             MatchResult matchResult = matchIterator.nextMatch();
@@ -67,12 +66,7 @@ public class IISLogParser extends AbstractParser {
     }
 
     @Override
-    public String getProcessorType() {
-        return "IIS Web Log Parser";
-    }
-
-    @Override
-    public String packageMatchingResult(Matcher matcher) {
+    protected String packageMatchingResult(Matcher matcher) {
         MatchIterator matchIterator = matcher.findAll();
 
         AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();

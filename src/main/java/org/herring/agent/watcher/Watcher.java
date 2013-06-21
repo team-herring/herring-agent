@@ -1,7 +1,5 @@
 package org.herring.agent.watcher;
 
-import org.herring.agent.processor.Processor;
-
 /**
  * Interface for watching something.
  * User: hyunje
@@ -10,6 +8,6 @@ import org.herring.agent.processor.Processor;
  */
 public interface Watcher {
     void startWatching();
-    void setProcessor(Processor processor);
+
     void setConfiguration(String target, int delay);
 }

@@ -1,8 +1,6 @@
 package org.herring.agent.processor.parser;
 
-import jregex.MatchIterator;
 import jregex.Matcher;
-import org.herring.agent.processor.Processor;
 
 /**
  * Parser 추상화 객체
@@ -10,10 +8,20 @@ import org.herring.agent.processor.Processor;
  * Date: 13. 5. 8.
  * Time: 오후 10:56
  */
-public abstract class AbstractParser implements Processor {
+public abstract class AbstractParser implements Parser {
     protected String regex;
 
-    public abstract Matcher matchRegex(String input);
-    public abstract String getProcessorType();
-    public abstract String packageMatchingResult(Matcher matcher);
+    abstract Matcher matchRegex(String input);
+
+    abstract String packageMatchingResult(Matcher matcher);
+
+    public String parse(String contents) {
+        Matcher matcher = this.matchRegex(contents);
+//        MatchIterator matchIterator = matcher.findAll();
+//        int rowCount = matchIterator.count();
+        //Match Result 를 통해서 Sender에 Matching 된 결과 전송.
+        //Sender에서는 Match Result를 이용해 Host에 전송.
+
+        return this.packageMatchingResult(matcher);
+    }
 }

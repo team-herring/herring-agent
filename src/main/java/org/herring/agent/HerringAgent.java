@@ -1,17 +1,14 @@
 package org.herring.agent;
 
-import jregex.MatchIterator;
-import jregex.Matcher;
 import org.apache.commons.configuration.ConfigurationException;
 import org.herring.agent.processor.Processor;
-import org.herring.agent.processor.parser.ApacheWebAccessLogParser;
-import org.herring.agent.processor.parser.IISLogParser;
-import org.herring.agent.processor.parser.NullParser;
-import org.herring.agent.sender.BasicSender;
+import org.herring.agent.processor.parser.Parser;
 import org.herring.agent.sender.Sender;
 import org.herring.agent.util.AgentConfiguration;
+import org.herring.agent.util.ParserAttacher;
+import org.herring.agent.util.ProcessorAttacher;
+import org.herring.agent.util.WatcherAttatcher;
 import org.herring.agent.watcher.Watcher;
-import org.herring.agent.watcher.polling.PollingWatcher;
 import org.herring.core.cruiser.model.CruiserAgentConnectionObject;
 import org.herring.core.protocol.ClientComponent;
 import org.herring.core.protocol.codec.HerringCodec;
@@ -37,20 +34,23 @@ import java.util.UUID;
 public class HerringAgent {
 
     private String agentUUID;
+
     private Watcher watcher;
     private Processor processor;
     private Sender sender;
+
     private ClientComponent connectionComponent;
     private CruiserAgentConnectionObject connectionObject;
     private boolean isConnected;
+    private AgentConfiguration agentConfiguration;
 
     /**
      * 생성자. 설정 파일 로드
      */
     private HerringAgent() {
-            agentUUID = UUID.randomUUID().toString();
-            AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
-            connectionObject = new CruiserAgentConnectionObject(agentUUID, true, agentConfiguration.rowDelimiter, agentConfiguration.columnDelimiter, agentConfiguration.dataDelimiter);
+        agentUUID = UUID.randomUUID().toString();
+        AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
+        connectionObject = new CruiserAgentConnectionObject(agentUUID, true, agentConfiguration.rowDelimiter, agentConfiguration.columnDelimiter, agentConfiguration.dataDelimiter);
     }
 
     /**
@@ -87,28 +87,8 @@ public class HerringAgent {
     /**
      * Directory Polling 시작
      */
-    public void start() {
+    public void startWatching() {
         watcher.startWatching();
-    }
-
-    /**
-     * WatchingEventListener 에서 감지된 String을 Agent의 Processor로 전달하여 Regular Expression Mathcing 수행
-     * Parsing 된 결과를 Sender를 통해 전송한다.
-     * <p/>
-     * TODO: Extract from Agent
-     *
-     * @param data EventListener에서 감지된 String
-     */
-    public void parse(String data) {
-        Matcher matcher = processor.matchRegex(data);
-        MatchIterator matchIterator = matcher.findAll();
-//        int rowCount = matchIterator.count();
-        //Match Result 를 통해서 Sender에 Matching 된 결과 전송.
-        //Sender에서는 Match Result를 이용해 Host에 전송.
-        String parsedString = processor.packageMatchingResult(matcher);
-
-        //rowCount와 parsedString을 package 해서 Cruiser로 전송
-        connectionComponent.getNetworkContext().sendObject(parsedString);
     }
 
     /**
@@ -117,69 +97,74 @@ public class HerringAgent {
      * @throws ConfigurationException
      */
     public void loadConfiguration() throws ConfigurationException {
-        AgentConfiguration agentConfiguration = AgentConfiguration.getInstance();
-        setWatcher(agentConfiguration.watcherType, agentConfiguration.watcherTarget, agentConfiguration.watcherDelay);
-        setProcessor(agentConfiguration.processorType);
-        setSender();
+        this.agentConfiguration = AgentConfiguration.getInstance();
     }
 
-    private void setSender() {
-        this.sender = BasicSender.getInstance();
-    }
 
+    //-------------------------------------------------------
+    //----------------Watcher 와 관련된 Methods----------------
     /**
-     * 설정 파일을 읽을 때, Watcher를 설정하는 함수
-     *
-     * @param watcherType   watcher의 종류
-     * @param watcherTarget polling할 target
-     * @param watcherDelay  polling delay
-     * @throws NumberFormatException
+     * 설정 파일로부터 Watcher를 설정
      */
-    private void setWatcher(String watcherType, String watcherTarget, String watcherDelay) throws NumberFormatException {
-        if ("polling".equals(watcherType)) {
-            int delay = Integer.parseInt(watcherDelay);
-            this.watcher = PollingWatcher.getInstance();
-            this.watcher.setConfiguration(watcherTarget, delay);
-        } else {
-            System.out.println("Polling Type Error!");
+    public void attachWatcher() {
+        try {
+            this.watcher = WatcherAttatcher.attach(this.agentConfiguration);
+        } catch (NumberFormatException e) {
+            System.out.println("Casting Error");
+            e.printStackTrace();
         }
+
     }
 
+    public void attachWatcher(Watcher watcher) {
+        this.watcher = watcher;
+    }
+
+    public void notifyProcessor(String contents) {
+        this.processor.processing(contents);
+    }
+    //-------------------------------------------------------
+    //-------------------------------------------------------
+
+
+
+    //---------------------------------------------------------
+    //----------------Processor 와 관련된 Methods----------------
     /**
-     * 설정 파일을 읽을 때, Processor를 설정하는 함수
-     *
-     * @param processorType processor의 종
+     * 설정 파일로부터 Processor를 설정
      */
-    private void setProcessor(String processorType) {
-
-        if ("IISLogParser".toLowerCase().equals(processorType.toLowerCase())) {
-            processor = IISLogParser.getInstance();
-            this.watcher.setProcessor(processor);
-        } else if ("ApacheWebAccessLogParser".toLowerCase().equals(processorType.toLowerCase())) {
-            processor = ApacheWebAccessLogParser.getInstance();
-            this.watcher.setProcessor(processor);
-        } else if ("NullParser".toLowerCase().equals(processorType.toLowerCase())) {
-            processor = NullParser.getInstance();
-            this.watcher.setProcessor(processor);
-        } else {
-            System.out.println("Processor Type Error!");
-        }
+    public void attachProcessor() {
+        this.processor = ProcessorAttacher.attachProcessor(this.agentConfiguration);
     }
+    public void attachProcessor(Processor processor){
+        this.processor = processor;
+    }
+
+    public void attachParser(){
+        this.processor.setParser(ParserAttacher.attachParser(this.agentConfiguration));
+    }
+
+    public void attachParser(Parser parser){
+        this.processor.setParser(parser);
+    }
+
+    public void notifySender(String contents){
+
+    }
+    //---------------------------------------------------------
+    //---------------------------------------------------------
+
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("==Watcher==\n").append(watcher.toString());
 //        builder.append("==Watcher==\n").append(watcher.toString());
-        builder.append("Processor Type : ").append(processor.getProcessorType()).append("\n");
+//        builder.append("Processor Type : ").append(processor.getProcessorType()).append("\n");
         return builder.toString();
     }
 
     public CruiserAgentConnectionObject getConnectionObject() {
         return connectionObject;
-    }
-
-    public Sender getSender() {
-        return sender;
     }
 
     public boolean isConnected() {

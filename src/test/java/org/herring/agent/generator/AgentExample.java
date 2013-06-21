@@ -13,7 +13,12 @@ public class AgentExample {
     public static void main(String[] args) throws ConfigurationException {
         HerringAgent agent = HerringAgent.getInstance();
         agent.loadConfiguration();
+
+        agent.attachWatcher();
+        agent.attachProcessor();
+        agent.attachParser();
+
         agent.connectToCruiser();
-        agent.start();
+        agent.startWatching();
     }
 }

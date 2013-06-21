@@ -49,13 +49,7 @@ public class ApacheWebAccessLogParser extends AbstractParser {
         }
         String trimmed_input = input.trim();
         Pattern pattern = new Pattern(regex);
-        Matcher matcher = pattern.matcher(trimmed_input);
-        return matcher;
-    }
-
-    @Override
-    public String getProcessorType() {
-        return "Apache Web Access Log Parser";
+        return pattern.matcher(trimmed_input);
     }
 
     @Override

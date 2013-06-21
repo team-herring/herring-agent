@@ -1,6 +1,5 @@
 package org.herring.agent.processor.parser;
 
-import jregex.MatchIterator;
 import jregex.Matcher;
 
 /**
@@ -29,13 +28,8 @@ public class NullParser extends AbstractParser {
     }
 
     @Override
-    public String getProcessorType() {
-        return "Null Parser";
-    }
-
-    @Override
     public String packageMatchingResult(Matcher matcher) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return "";
     }
 
 }

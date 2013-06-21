@@ -3,7 +3,6 @@ package org.herring.agent.watcher.polling;
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
-import org.herring.agent.processor.Processor;
 import org.herring.agent.watcher.Watcher;
 
 import java.io.File;
@@ -18,14 +17,12 @@ import java.io.File;
  * Time: 오후 9:39
  */
 public class PollingWatcher implements Watcher {
+    private static PollingWatcher instance = null;
     File targetDirectory = null;
     FileAlterationObserver observer = null;
     FileAlterationMonitor monitor = null;
     PollingEventListener listener = null;
-
     int delay;
-
-    private static PollingWatcher instance = null;
 
     public static PollingWatcher getInstance() {
         if (instance == null)
@@ -57,16 +54,9 @@ public class PollingWatcher implements Watcher {
         }
     }
 
-    @Override
-    public void setProcessor(Processor processor) {
-//        listener.addProcessor(new JavaStackTraceParser());
-//        listener.addProcessor(new ApacheWebAccessLogParser());
-//        listener.addProcessor(processor);
-    }
-
-    public String toString(){
-        return  "Type : Polling\n" +
-                "Target : "+this.targetDirectory+"\n" +
-                "Delay : "+this.delay+"\n";
+    public String toString() {
+        return "Type : Polling\n" +
+                "Target : " + this.targetDirectory + "\n" +
+                "Delay : " + this.delay + "\n";
     }
 }

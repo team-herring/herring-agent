@@ -38,7 +38,7 @@ public class FileChangeEventHandler extends AbstractFileEventHandler {
 
             //Pass read lines to Processor
             HerringAgent agent = HerringAgent.getInstance();
-            agent.parse(addedLine);
+            agent.notifyProcessor(addedLine);
 
 
         } catch (FileNotFoundException e) {

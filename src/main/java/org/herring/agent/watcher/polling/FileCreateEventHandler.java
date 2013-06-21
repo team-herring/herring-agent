@@ -28,7 +28,7 @@ public class FileCreateEventHandler extends AbstractFileEventHandler{
 
             //Pass read lines to Processor
             HerringAgent agent = HerringAgent.getInstance();
-            agent.parse(readLine);
+            agent.notifyProcessor(readLine);
 
 
             //Create a counted line number file

@@ -17,12 +17,17 @@ public class AgentConfiguration {
     public String watcherType;
     public String watcherTarget;
     public String watcherDelay;
+
     public String processorType;
+
+    public String parserType;
     public String rowDelimiter;
     public String columnDelimiter;
     public String dataDelimiter;
+
     public String readCountSuffix = "count";
     public int BufferSize = 256;
+
     public String host;
     public String port;
 
@@ -34,11 +39,13 @@ public class AgentConfiguration {
             watcherTarget = configuration.getString("configuration.watcher.target", "./");
             watcherDelay = configuration.getString("configuration.watcher.delay", "500");
 
-            processorType = configuration.getString("configuration.processor.type", "nullparser");
+            parserType = configuration.getString("configuration.processor.tyep","basic");
 
-            rowDelimiter = configuration.getString("configuration.processor.rowdelimiter");
-            columnDelimiter = configuration.getString("configuration.processor.columndelimiter");
-            dataDelimiter = configuration.getString("configuration.processor.datadelimiter");
+            parserType = configuration.getString("configuration.parser.type", "nullparser");
+
+            rowDelimiter = configuration.getString("configuration.parser.rowdelimiter");
+            columnDelimiter = configuration.getString("configuration.parser.columndelimiter");
+            dataDelimiter = configuration.getString("configuration.parser.datadelimiter");
 
             host = configuration.getString("configuration.sender.target.host");
             port = configuration.getString("configuration.sender.target.port");

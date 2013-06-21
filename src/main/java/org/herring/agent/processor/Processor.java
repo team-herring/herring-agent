@@ -1,7 +1,6 @@
 package org.herring.agent.processor;
 
-import jregex.MatchIterator;
-import jregex.Matcher;
+import org.herring.agent.processor.parser.Parser;
 
 /**
  * 정규식 Parsing을 위한 Processor.
@@ -13,9 +12,7 @@ import jregex.Matcher;
  * Time: 오후 3:28
  */
 public interface Processor {
-    Matcher matchRegex(String input);
+    void setParser(Parser parser);
 
-    String packageMatchingResult(Matcher matcher);
-
-    String getProcessorType();
+    void processing(String data);
 }
