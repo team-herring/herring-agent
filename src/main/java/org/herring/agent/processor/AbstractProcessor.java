@@ -3,10 +3,8 @@ package org.herring.agent.processor;
 import org.herring.agent.processor.parser.Parser;
 
 /**
- * << Description >>
+ * Parser Intergace 추상 구현체
  * User: hyunje
- * Date: 13. 6. 22.
- * Time: 오전 2:39
  */
 public abstract class AbstractProcessor implements Processor{
     protected Parser parser;

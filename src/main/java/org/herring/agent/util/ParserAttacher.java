@@ -6,10 +6,8 @@ import org.herring.agent.processor.parser.NullParser;
 import org.herring.agent.processor.parser.Parser;
 
 /**
- * << Description >>
+ * Processor에 Parser를 붙이는 클래스. 설정값으로부터 Parser를 결정한다.
  * User: hyunje
- * Date: 13. 6. 22.
- * Time: 오전 3:45
  */
 public class ParserAttacher {
     public static Parser attachParser(AgentConfiguration configuration){

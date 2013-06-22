@@ -1,6 +1,6 @@
 package org.herring.agent;
 
-import org.herring.agent.generator.ApacheWebAccessLogGeneratorToString;
+import org.herring.agent.generator.IISLogGeneratorToString;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -8,14 +8,13 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 /**
- * << Description >>
+ * HerringAgent 테스트 클래스
  * User: hyunje
- * Date: 13. 6. 22.
- * Time: 오전 4:12
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class HerringAgentTest {
     public static HerringAgent herringAgent;
+
     @Before
     public void setUp() throws Exception {
         herringAgent = HerringAgent.getInstance();
@@ -45,20 +44,27 @@ public class HerringAgentTest {
     }
 
     @Test
-    public void test4StartWatching() throws Exception {
+    public void test4AttachSender() throws Exception {
+        herringAgent.attachSender();
+        herringAgent.prepareConnection();
+        System.out.println("AttachParser Done");
+    }
+
+    @Test
+    public void test5StartWatching() throws Exception {
         herringAgent.startWatching();
         System.out.println("StartWatching Done");
     }
 
     @Test
-    public void test5NotifyProcessor() throws Exception {
-        ApacheWebAccessLogGeneratorToString generator = new ApacheWebAccessLogGeneratorToString();
-        herringAgent.notifyProcessor(generator.getSampleLog(10));
+    public void test6NotifyProcessor() throws Exception {
+        IISLogGeneratorToString generator = new IISLogGeneratorToString();
+//        herringAgent.notifyProcessor(generator.getSampleLog(10));
         System.out.println("NotifyProcessor Done");
     }
 
     @Test
-    public void test6NotifySender() throws Exception {
+    public void test7NotifySender() throws Exception {
 
     }
 }

@@ -9,10 +9,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * << Description >>
+ * 모든 파일 핸들러가 공통적으로 사용하는 기능에 대해 정의한 추상 클래스
  * User: hyunje
- * Date: 13. 6. 15.
- * Time: 오후 11:19
  */
 public abstract class AbstractFileEventHandler implements FileEventHandler {
     protected AgentConfiguration agentConfiguration;
@@ -49,35 +47,6 @@ public abstract class AbstractFileEventHandler implements FileEventHandler {
         addedFileChannel.close();
         addedFileBuffer.clear();
         return addedLine;
-    }
-
-    protected int ReadCountFile(File file) throws IOException{
-        String countFileName = file.getAbsolutePath()+ "." + agentConfiguration.readCountSuffix;
-        File cFile = new File(countFileName);
-        if(!cFile.exists()){
-            return 0;
-        }
-        RandomAccessFile countFile = new RandomAccessFile(cFile,"r");
-        FileChannel countFileChannel = countFile.getChannel();
-        ByteBuffer countFileBuffer = ByteBuffer.allocate(agentConfiguration.BufferSize);
-        countFileBuffer.clear();
-        countFileChannel.position(0);
-        int byteRead = countFileChannel.read(countFileBuffer);
-        String countLine = "";
-        while (byteRead != -1){
-            countFileBuffer.flip();
-            while (countFileBuffer.hasRemaining()) {
-                char currentChar = (char) countFileBuffer.get();
-                countLine += currentChar;
-            }
-            countFileBuffer.clear();
-            byteRead = countFileChannel.read(countFileBuffer);
-        }
-
-        countFile.close();
-        countFileChannel.close();
-        countFileBuffer.clear();
-        return Integer.parseInt(countLine);
     }
 
     protected void CreateCountLineFile(File file, int countLine) throws IOException {

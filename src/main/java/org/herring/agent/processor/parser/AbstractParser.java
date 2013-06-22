@@ -8,8 +8,6 @@ import java.util.Map;
 /**
  * Parser 추상화 객체
  * User: hyunje
- * Date: 13. 5. 8.
- * Time: 오후 10:56
  */
 public abstract class AbstractParser implements Parser {
     protected String regex;

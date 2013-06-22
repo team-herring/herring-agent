@@ -9,12 +9,10 @@ import java.io.File;
 
 
 /**
- * Class for polling a directory.
- * The directory must be last directory in current version.
+ * 설정된 경로를 Watching할 Watcher 구현체
+ * 현재 버전에서는 경로는 폴더여야만 한다.
  * <p/>
  * User: hyunje
- * Date: 13. 4. 23.
- * Time: 오후 9:39
  */
 public class PollingWatcher implements Watcher {
     private static PollingWatcher instance = null;

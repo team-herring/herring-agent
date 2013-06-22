@@ -11,10 +11,7 @@ import java.util.*;
 /**
  * Apache Web Access Log 파서
  * User: hyunje
- * Date: 13. 5. 14.
- * Time: 오전 10:43
  *
- * TODO: Append Herring_timestamp
  */
 public class ApacheWebAccessLogParser extends AbstractParser {
     private static ApacheWebAccessLogParser instance = null;

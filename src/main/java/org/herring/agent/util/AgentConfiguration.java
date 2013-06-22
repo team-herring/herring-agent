@@ -6,10 +6,8 @@ import org.apache.commons.configuration.XMLConfiguration;
 import java.io.File;
 
 /**
- * Static Constants for Agent
+ * Agent의 설정 파일을 읽고 그 값을 설정하는 클래스
  * User: hyunje
- * Date: 13. 4. 28.
- * Time: 오후 6:06
  */
 public class AgentConfiguration {
 

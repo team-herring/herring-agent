@@ -4,10 +4,9 @@ import org.herring.agent.sender.BasicSender;
 import org.herring.agent.sender.Sender;
 
 /**
- * << Description >>
+ * Agent에 Sender를 설정하는 함수.
+ * TODO:설정값으로부터 알맞는 Sender를 선택
  * User: hyunje
- * Date: 13. 6. 22.
- * Time: 오전 7:49
  */
 public class SenderAttacher {
     public static Sender attach(AgentConfiguration configuration){

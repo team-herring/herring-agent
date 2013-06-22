@@ -20,15 +20,10 @@ import java.util.UUID;
 /**
  * Herring의 Agent 클래스.
  * config.xml에서 설정 값을 가져온다.
- * 1. Configuration 읽기
- * 2. 읽은 Configuation 을 이용해 Cruiser 와 통신
- * 3. 통신 성공하면 Agent 실행과 데이터 전송 시작
  * <p/>
  * Singleton 형태이기 때문에, 여러 target을 watching 하기 위해서는 리팩토링 필요.
  * <p/>
  * User: hyunje
- * Date: 13. 5. 20.
- * Time: 오전 10:56
  */
 public class HerringAgent {
 

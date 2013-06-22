@@ -7,10 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * << Description >>
+ * 파일이 변경된 이벤트를 캐치할 핸들러
  * User: hyunje
- * Date: 13. 6. 15.
- * Time: 오후 10:56
  */
 public class FileChangeEventHandler extends AbstractFileEventHandler {
     @Override

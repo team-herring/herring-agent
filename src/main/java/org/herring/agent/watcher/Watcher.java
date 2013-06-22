@@ -1,10 +1,8 @@
 package org.herring.agent.watcher;
 
 /**
- * Interface for watching something.
+ * Watcher의 Interface
  * User: hyunje
- * Date: 13. 5. 7.
- * Time: 오후 12:31
  */
 public interface Watcher {
     void startWatching();

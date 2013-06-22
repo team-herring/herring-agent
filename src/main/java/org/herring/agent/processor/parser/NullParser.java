@@ -9,8 +9,6 @@ import java.util.Map;
  * 아무 Parsing도 하지 않고 그대로 읽은 데이터를 전송하는 parser.
  * <p/>
  * User: hyunje
- * Date: 13. 5. 21.
- * Time: 오후 5:15
  */
 public class NullParser extends AbstractParser {
     private static NullParser instance = null;

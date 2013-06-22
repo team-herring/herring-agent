@@ -4,10 +4,9 @@ import org.herring.agent.processor.BasicProcessor;
 import org.herring.agent.processor.Processor;
 
 /**
- * << Description >>
+ * Agent에 Processor를 설정해주는 클래스.
+ * 설정 값으로부터 Processor를 선택한다.
  * User: hyunje
- * Date: 13. 6. 21.
- * Time: 오후 11:47
  */
 public class ProcessorAttacher {
     public static Processor attachProcessor(AgentConfiguration configuration) {

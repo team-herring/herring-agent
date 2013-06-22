@@ -4,10 +4,9 @@ import org.herring.agent.watcher.Watcher;
 import org.herring.agent.watcher.polling.PollingWatcher;
 
 /**
- * << Description >>
+ * Agent에 알맞는 Watcher를 설정하는 클래스
+ * 설정값으로부터 알맞는 Watcher를 선택한다.
  * User: hyunje
- * Date: 13. 6. 21.
- * Time: 오후 11:21
  */
 public class WatcherAttatcher {
     public static Watcher attach(AgentConfiguration configuration) throws NumberFormatException{

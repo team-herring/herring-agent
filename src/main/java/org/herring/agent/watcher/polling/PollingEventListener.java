@@ -7,18 +7,15 @@ import org.herring.agent.util.AgentConfiguration;
 import java.io.File;
 
 /**
- * Event Listener for PollingWatcher
+ * 폴더를 Watching 하면서 무언가 변화가 있다는 이벤트를 캐치할 리스너
  * User: hyunje
- * Date: 13. 5. 5.
- * Time: 오후 10:08
  */
 public class PollingEventListener implements FileAlterationListener {
     AgentConfiguration agentConfiguration;
 
-    public PollingEventListener(){
+    public PollingEventListener() {
         agentConfiguration = AgentConfiguration.getInstance();
     }
-
 
     @Override
     public void onStart(FileAlterationObserver fileAlterationObserver) {

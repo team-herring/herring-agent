@@ -12,8 +12,6 @@ import java.util.*;
 /**
  * IIS Log 파싱을 위한 Parser
  * User: hyunje
- * Date: 13. 5. 12.
- * Time: 오후 10:04
  */
 public class IISLogParser extends AbstractParser {
     private static IISLogParser instance = null;

@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * << Description >>
+ * 가장 기본적인 형태의 Processor
  * User: hyunje
- * Date: 13. 6. 22.
- * Time: 오전 3:21
  */
 public class BasicProcessor extends AbstractProcessor {
     @Override
