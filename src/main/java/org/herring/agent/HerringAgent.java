@@ -216,4 +216,10 @@ public class HerringAgent {
     private static final class HerringAgentHolder {
         private static final HerringAgent INSATNCE = new HerringAgent();
     }
+
+    public String printAgent(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("This is Agent").append("\n").append("Test Agent Print");
+        return builder.toString();
+    }
 }
